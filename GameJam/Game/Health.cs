@@ -8,13 +8,27 @@ namespace WindowsFormsApp1.Game
 {
     public class Health
     {
-        private int _startHP;
+        private int _startHp;
+        public int CurrentHp { get; set; }
 
-        public int CurrentHP 
-        { 
-            get => _startHP;
+        public Health(int startHp)
+        {
+            _startHp = startHp;
+            CurrentHp = _startHp;
+        }
 
-            set => _startHP = value;
+        //Health functions to be called to modefy the health;
+        public void ResetHP()
+        {
+            CurrentHp = _startHp;
+        }
+        public void AddHealth(int health)
+        {
+            CurrentHp += health;
+        }
+        public void RemoveHealth(int health)
+        {
+            CurrentHp -= health;
         }
     }
 }

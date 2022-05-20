@@ -21,9 +21,7 @@ namespace GameJam
             Application.SetCompatibleTextRenderingDefault(false);
 
             RenderForm form = new RenderForm();
-
-            Health hp = new Health(); //Get's the Health System;
-            hp.CurrentHP = 3; //Set's the HP for the player;
+            Health hp = new Health(3);
 
             form.FormClosing += Form_FormClosing;
             form.Show();
@@ -36,6 +34,7 @@ namespace GameJam
                 form.Logic(frametime);
                 form.Invalidate();
                 Application.DoEvents();
+ 
 
                 DateTime next = DateTime.Now;
                 double totalMilliseconds = next.Subtract(dateTime).TotalMilliseconds;
