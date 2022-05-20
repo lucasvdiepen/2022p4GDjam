@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.Game; //Was needed to get the Health Class;
 
 namespace GameJam
 {
@@ -20,8 +21,13 @@ namespace GameJam
             Application.SetCompatibleTextRenderingDefault(false);
 
             RenderForm form = new RenderForm();
+
+            Health hp = new Health(); //Get's the Health System;
+            hp.CurrentHP = 3; //Set's the HP for the player;
+
             form.FormClosing += Form_FormClosing;
             form.Show();
+            
 
             DateTime dateTime = DateTime.Now;
             float frametime = 1;
@@ -30,7 +36,6 @@ namespace GameJam
                 form.Logic(frametime);
                 form.Invalidate();
                 Application.DoEvents();
-
 
                 DateTime next = DateTime.Now;
                 double totalMilliseconds = next.Subtract(dateTime).TotalMilliseconds;
