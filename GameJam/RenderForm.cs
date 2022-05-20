@@ -1,3 +1,4 @@
+using GameJam.Events;
 using GameJam.Game;
 using GameJam.Tools;
 using NAudio.Wave;
@@ -11,13 +12,12 @@ namespace GameJam
 {
     public partial class RenderForm : Form
     {
-
-
         private LevelLoader levelLoader;
         private float frametime;
         private GameRenderer renderer;
         private Audio audio;
         private readonly GameContext gc = new GameContext();
+
         public RenderForm()
         {
             InitializeComponent();
@@ -29,7 +29,6 @@ namespace GameJam
             KeyDown += RenderForm_KeyDown;
             FormClosing += Form1_FormClosing;
             Load += RenderForm_Load;
-
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -40,7 +39,7 @@ namespace GameJam
         private void RenderForm_Load(object sender, EventArgs e)
         {
             levelLoader = new LevelLoader(gc.tileSize, new FileLevelDataSource());
-            levelLoader.LoadRooms(gc.spriteMap.GetMap());
+            levelLoader.LoadRooms(gc.spriteMap.GetMap(), gc.spriteMap.GetTileObjects());
 
             renderer = new GameRenderer(gc);
 
@@ -109,6 +108,17 @@ namespace GameJam
                 {
                     player.rectangle.X = newx;
                     player.rectangle.Y = newy;
+
+                    MoveEvent newMoveEvent = new MoveEvent()
+                    {
+                        GameContext = gc,
+                        GameRenderer = renderer,
+                        LevelLoader = levelLoader,
+                        PlayerRenderer = player,
+                        Direction = new Vector2(x, y)
+                    };
+
+                    next.tileBehaviour?.OnEnter(newMoveEvent);
                 }
             }
         }

@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace GameJam.Game
 {
-    class RenderObject
+    public class RenderObject
     {
         internal RectangleF rectangle;
         internal float frame;
