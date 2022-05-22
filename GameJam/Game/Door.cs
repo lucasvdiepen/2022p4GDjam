@@ -9,9 +9,7 @@ namespace GameJam.Game
 {
     public class Door : TileBehaviour
     {
-        public Door(bool isMoveBlocked) : base(isMoveBlocked) { }
-
-        public override bool CanEnter(MoveEvent moveEvent)
+        public override CanEnterEvent CanEnter(MoveEvent moveEvent)
         {
             moveEvent.GameContext.room = moveEvent.LevelLoader.GetRoom(moveEvent.GameContext.room.roomx + (int)moveEvent.Direction.x, moveEvent.GameContext.room.roomy + (int)moveEvent.Direction.y);
 
@@ -24,17 +22,7 @@ namespace GameJam.Game
                 moveEvent.PlayerRenderer.rectangle.X += -(int)moveEvent.Direction.x * ((moveEvent.GameContext.room.tiles[0].Length - 2) * moveEvent.GameContext.tileSize);
             }
 
-            return false;
-        }
-
-        public override void OnEnter(MoveEvent moveEvent)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnExit()
-        {
-            throw new NotImplementedException();
+            return new CanEnterEvent() { BlockMovement = true, BlockEvents = false };
         }
     }
 }

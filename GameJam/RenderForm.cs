@@ -17,6 +17,7 @@ namespace GameJam
         private GameRenderer renderer;
         private Audio audio;
         private readonly GameContext gc = new GameContext();
+        private Tile _previousTile;
 
         public RenderForm()
         {
@@ -99,12 +100,23 @@ namespace GameJam
                     Direction = new Vector2(x, y)
                 };
 
-                if (next.tileBehaviour == null || next.tileBehaviour.CanEnter(newMoveEvent))
+                CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
+
+                if (canEnterEvent == null || !canEnterEvent.BlockMovement)
                 {
                     player.rectangle.X = newx;
                     player.rectangle.Y = newy;
+                }
 
+                if(canEnterEvent == null || !canEnterEvent.BlockEvents)
+                {
+                    _previousTile?.tileBehaviour?.OnExit(newMoveEvent);
                     next.tileBehaviour?.OnEnter(newMoveEvent);
+                }
+
+                if (canEnterEvent == null || !canEnterEvent.BlockMovement || !canEnterEvent.BlockEvents)
+                {
+                    _previousTile = next;
                 }
             }
         }
@@ -117,7 +129,10 @@ namespace GameJam
             Tile[] allTiles = gc.room.GetAllTiles();
 
             int c = allTiles.Length;
-            for (int i = 0; i < c; i++) allTiles[i].tileBehaviour?.Update(frametime);
+            for (int i = 0; i < c; i++)
+            {
+                allTiles[i].tileBehaviour?.Update(frametime);
+            }
         }
         protected override void OnPaint(PaintEventArgs e)
         {

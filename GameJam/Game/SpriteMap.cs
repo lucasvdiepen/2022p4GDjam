@@ -35,7 +35,7 @@ namespace GameJam.Game
 
         private Door GetNewDoorInstance()
         {
-            return new Door(true);
+            return new Door();
         }
 
         internal Dictionary<char, Rectangle> GetMap()

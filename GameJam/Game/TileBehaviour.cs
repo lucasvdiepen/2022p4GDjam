@@ -13,14 +13,19 @@ namespace GameJam.Game
         public float Y {get; private set; }
         private bool isMoveBlocked;
 
+        public TileBehaviour()
+        {
+
+        }
+
         public TileBehaviour(bool isMoveBlocked)
         {
             this.isMoveBlocked = isMoveBlocked;
         }
 
-        public virtual bool CanEnter(MoveEvent moveEvent)
+        public virtual CanEnterEvent CanEnter(MoveEvent moveEvent)
         {
-            return !isMoveBlocked;
+            return new CanEnterEvent() { BlockMovement = isMoveBlocked, BlockEvents = true };
         }
 
         public virtual void OnEnter(MoveEvent moveEvent)
@@ -28,14 +33,14 @@ namespace GameJam.Game
             
         }
 
-        public virtual void OnExit()
+        public virtual void OnExit(MoveEvent moveEvent)
         {
-
+            
         }
 
         public virtual void Update(float frameTime)
         {
-
+            
         }
     }
 }
