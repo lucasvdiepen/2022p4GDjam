@@ -90,12 +90,6 @@ namespace GameJam
 
             if (next != null)
             {
-                if(next.tileBehaviour == null || !next.tileBehaviour.IsMoveBlocked)
-                {
-                    player.rectangle.X = newx;
-                    player.rectangle.Y = newy;
-                }
-
                 MoveEvent newMoveEvent = new MoveEvent()
                 {
                     GameContext = gc,
@@ -105,7 +99,13 @@ namespace GameJam
                     Direction = new Vector2(x, y)
                 };
 
-                next.tileBehaviour?.OnEnter(newMoveEvent);
+                if (next.tileBehaviour == null || next.tileBehaviour.CanEnter(newMoveEvent))
+                {
+                    player.rectangle.X = newx;
+                    player.rectangle.Y = newy;
+
+                    next.tileBehaviour?.OnEnter(newMoveEvent);
+                }
             }
         }
 

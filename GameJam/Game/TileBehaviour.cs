@@ -11,11 +11,16 @@ namespace GameJam.Game
     {
         public float X { get; private set; }
         public float Y {get; private set; }
-        public bool IsMoveBlocked { get; set; }
+        private bool isMoveBlocked;
 
         public TileBehaviour(bool isMoveBlocked)
         {
-            IsMoveBlocked = isMoveBlocked;
+            this.isMoveBlocked = isMoveBlocked;
+        }
+
+        public virtual bool CanEnter(MoveEvent moveEvent)
+        {
+            return !isMoveBlocked;
         }
 
         public virtual void OnEnter(MoveEvent moveEvent)
