@@ -7,10 +7,16 @@ using System.Threading.Tasks;
 
 namespace GameJam.Game
 {
-    public abstract class TileBehaviour
+    public class TileBehaviour
     {
-        public float x;
-        public float y;
+        public float X { get; private set; }
+        public float Y {get; private set; }
+        public bool IsMoveBlocked { get; set; }
+
+        public TileBehaviour(bool isMoveBlocked)
+        {
+            IsMoveBlocked = isMoveBlocked;
+        }
 
         public virtual void OnEnter(MoveEvent moveEvent)
         {
@@ -25,6 +31,6 @@ namespace GameJam.Game
         public virtual void Update(float frameTime)
         {
 
-        }    
+        }
     }
 }

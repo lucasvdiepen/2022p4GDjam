@@ -90,42 +90,34 @@ namespace GameJam
 
             if (next != null)
             {
-                if (next.graphic == 'D')
-                {
-                    gc.room = levelLoader.GetRoom(gc.room.roomx + x, gc.room.roomy + y);
-
-                    if (y != 0)
-                    {
-                        player.rectangle.Y += -y * ((gc.room.tiles.Length - 2) * gc.tileSize);
-                    }
-                    else
-                    {
-                        player.rectangle.X += -x * ((gc.room.tiles[0].Length - 2) * gc.tileSize);
-                    }
-                }
-
-                else if (next.graphic != '#')
+                if(next.tileBehaviour == null || !next.tileBehaviour.IsMoveBlocked)
                 {
                     player.rectangle.X = newx;
                     player.rectangle.Y = newy;
-
-                    MoveEvent newMoveEvent = new MoveEvent()
-                    {
-                        GameContext = gc,
-                        GameRenderer = renderer,
-                        LevelLoader = levelLoader,
-                        PlayerRenderer = player,
-                        Direction = new Vector2(x, y)
-                    };
-
-                    next.tileBehaviour?.OnEnter(newMoveEvent);
                 }
+
+                MoveEvent newMoveEvent = new MoveEvent()
+                {
+                    GameContext = gc,
+                    GameRenderer = renderer,
+                    LevelLoader = levelLoader,
+                    PlayerRenderer = player,
+                    Direction = new Vector2(x, y)
+                };
+
+                next.tileBehaviour?.OnEnter(newMoveEvent);
             }
         }
 
         public void Logic(float frametime)
         {
             this.frametime = frametime;
+
+            //Update all tiles
+            Tile[] allTiles = gc.room.GetAllTiles();
+
+            int c = allTiles.Length;
+            for (int i = 0; i < c; i++) allTiles[i].tileBehaviour?.Update(frametime);
         }
         protected override void OnPaint(PaintEventArgs e)
         {
