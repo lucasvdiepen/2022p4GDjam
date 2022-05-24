@@ -17,8 +17,8 @@ namespace GameJam.Game
             tileMap.Add('D', new Rectangle(2, 75, 16, 16));
             tileMap.Add('!', new Rectangle(66, 75, 16, 16));
 
-            tileObjects.Add('D', GetNewDoorInstance);
-            tileObjects.Add('#', GetNewWallInstance);
+            tileObjects.Add('D', () => { return new Door(); });
+            tileObjects.Add('#', () => { return new TileBehaviour(true); });
 
             playerAnimation = new Rectangle[]
                 {
@@ -26,16 +26,6 @@ namespace GameJam.Game
                     new Rectangle(60, 9, 16, 16),
                     new Rectangle(77, 9, 16, 16)
                 };
-        }
-
-        private TileBehaviour GetNewWallInstance()
-        {
-            return new TileBehaviour(true);
-        }
-
-        private Door GetNewDoorInstance()
-        {
-            return new Door();
         }
 
         internal Dictionary<char, Rectangle> GetMap()
