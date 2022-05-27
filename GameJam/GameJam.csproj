@@ -79,8 +79,8 @@
     <Compile Include="Audio.cs" />
     <Compile Include="Events\CanEnterEvent.cs" />
     <Compile Include="Events\MoveEvent.cs" />
-    <Compile Include="Game\Door.cs" />
-    <Compile Include="Game\TileBehaviour.cs" />
+    <Compile Include="TileEvents\Door.cs" />
+    <Compile Include="TileEvents\TileBehaviour.cs" />
     <Compile Include="Game\SpriteMap.cs" />
     <Compile Include="Game\Vector2.cs" />
     <Compile Include="Tools\FileLevelDataSource.cs" />

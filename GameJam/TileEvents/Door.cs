@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameJam.Game
+namespace GameJam.TileEvents
 {
     public class Door : TileBehaviour
     {
