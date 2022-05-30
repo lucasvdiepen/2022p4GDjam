@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.Game; //Was needed to get the Health Class;
+using GameJam.Game; 
 
 namespace GameJam
 {
