@@ -1,4 +1,5 @@
 using System.Drawing;
+using GameJam.TileEvents;
 
 namespace GameJam.Game
 {
@@ -8,6 +9,7 @@ namespace GameJam.Game
         public Rectangle sprite;
         public float frame;
         internal Rectangle rectangle;
+        public TileBehaviour tileBehaviour;
     }
 }
 

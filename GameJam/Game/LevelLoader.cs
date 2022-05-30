@@ -1,7 +1,9 @@
 using GameJam.Tools;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using GameJam.TileEvents;
 
 namespace GameJam.Game
 {
@@ -16,7 +18,7 @@ namespace GameJam.Game
             this.size = size;
         }
 
-        public void LoadRooms(Dictionary<char, Rectangle> tileMap)
+        public void LoadRooms(Dictionary<char, Rectangle> tileMap, Dictionary<char, Func<TileBehaviour>> tileObject)
         {
             string dir = Path.Combine(PathHelper.ExeDir(), "leveldata");
             foreach (FileInfo file in new DirectoryInfo(dir).GetFiles())
@@ -24,7 +26,7 @@ namespace GameJam.Game
                 string[] split= file.Name.Split('.');
                 int x = int.Parse(split[1]);
                 int y = int.Parse(split[2]);
-                Room r = Load(x,y, tileMap);
+                Room r = Load(x,y, tileMap, tileObject);
                 rooms.Add($"{x}-{y}",r);
             }
         }
@@ -33,7 +35,7 @@ namespace GameJam.Game
         {
             return rooms[$"{roomX}-{roomY}"];
         }
-        private Room Load(int roomX, int roomY, Dictionary<char, Rectangle> tileMap)
+        private Room Load(int roomX, int roomY, Dictionary<char, Rectangle> tileMap, Dictionary<char, Func<TileBehaviour>> roomObjects)
         {
             Room room = new Room()
             {
@@ -49,11 +51,14 @@ namespace GameJam.Game
                 room.tiles[y] = new Tile[line.Length];
                 for (int x = 0; x < room.tiles[y].Length; x++)
                 {
+                    char tileChar = line[x];
+
                     room.tiles[y][x] = new Tile()
                     {
-                        graphic = line[x],
+                        graphic = tileChar,
                         rectangle = new Rectangle(size * x, size * y, size, size),
-                        sprite = tileMap[line[x]]
+                        sprite = tileMap[line[x]],
+                        tileBehaviour = roomObjects.ContainsKey(tileChar) ? roomObjects[tileChar].Invoke() : null
                     };
 
                 }
