@@ -25,7 +25,6 @@ namespace GameJam
 
             form.FormClosing += Form_FormClosing;
             form.Show();
-            
 
             DateTime dateTime = DateTime.Now;
             float frametime = 1;

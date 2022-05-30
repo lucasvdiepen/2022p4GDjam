@@ -9,7 +9,7 @@ namespace WindowsFormsApp1.Game
     public class Health
     {
         private int _startHp;
-        public int CurrentHp { get; set; }
+        public int CurrentHp { get; private set; }
 
         public Health(int startHp)
         {
