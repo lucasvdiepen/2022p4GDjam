@@ -129,13 +129,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="leveldata\room.0.0.txt">
+    <Content Include="leveldata\room.-1.0.0.txt" />
+    <Content Include="leveldata\room.0.0.0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="leveldata\room.0.1.txt">
+    <Content Include="leveldata\room.0.0.1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="leveldata\room.1.0.txt">
+    <Content Include="leveldata\room.1.0.0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="sprites.png">

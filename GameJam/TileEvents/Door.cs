@@ -11,7 +11,7 @@ namespace GameJam.TileEvents
     {
         public override CanEnterEvent CanEnter(MoveEvent moveEvent)
         {
-            moveEvent.GameContext.room = moveEvent.LevelLoader.GetRoom(moveEvent.GameContext.room.roomx + (int)moveEvent.Direction.x, moveEvent.GameContext.room.roomy + (int)moveEvent.Direction.y);
+            moveEvent.GameContext.room = moveEvent.LevelLoader.GetRoom(moveEvent.GameContext.room.roomx + (int)moveEvent.Direction.x, moveEvent.GameContext.room.roomy, moveEvent.GameContext.room.roomz + (int)moveEvent.Direction.y);
 
             if ((int)moveEvent.Direction.y != 0)
             {
