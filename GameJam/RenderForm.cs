@@ -1,8 +1,10 @@
 using GameJam.Events;
 using GameJam.Game;
+using GameJam.TileEvents;
 using GameJam.Tools;
 using NAudio.Wave;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -49,9 +51,8 @@ namespace GameJam
             gc.player = new RenderObject()
             {
                 frames = gc.spriteMap.GetPlayerFrames(),
-                rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
+                rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize)
             };
-
 
             ClientSize =
              new Size(
@@ -106,6 +107,19 @@ namespace GameJam
                 {
                     player.rectangle.X = newx;
                     player.rectangle.Y = newy;
+
+                    List<RenderObject> activeObjects = gc.room.activeObjects;
+
+                    int c = activeObjects.Count;
+                    for (int i = 0; i < c; i++)
+                    {
+                        RenderObject currentObject = activeObjects[i];
+
+                        if ((int)currentObject.rectangle.X == newx && (int)currentObject.rectangle.Y == newy)
+                        {
+                            currentObject.objectBehaviour?.OnEnter(newMoveEvent);
+                        }
+                    }
                 }
 
                 if(canEnterEvent == null || !canEnterEvent.BlockEvents)
@@ -132,6 +146,15 @@ namespace GameJam
             for (int i = 0; i < c; i++)
             {
                 allTiles[i].tileBehaviour?.Update(frametime);
+            }
+
+            //Update active objects
+            List<RenderObject> activeObjects = gc.room.activeObjects;
+
+            int l = activeObjects.Count;
+            for(int i = 0; i < l; i++)
+            {
+                activeObjects[i].objectBehaviour?.Update(frametime);
             }
         }
         protected override void OnPaint(PaintEventArgs e)

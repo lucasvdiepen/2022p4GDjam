@@ -60,7 +60,7 @@ namespace GameJam.Game
                         graphic = tileChar,
                         rectangle = new Rectangle(size * x, size * y, size, size),
                         sprite = tileMap[line[x]],
-                        tileBehaviour = roomObjects.ContainsKey(tileChar) ? roomObjects[tileChar].Invoke() : null
+                        tileBehaviour = roomObjects.ContainsKey(tileChar) ? roomObjects[tileChar]() : null
                     };
 
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -39,6 +40,14 @@ namespace GameJam.Game
             Graphics g = InitGraphics(e);
             RenderRoom(g);
             RenderObject(g, context.player);
+
+            List<RenderObject> activeObjects = context.room.activeObjects;
+
+            int c = activeObjects.Count;
+            for(int i = 0; i < c; i++)
+            {
+                RenderObject(g, activeObjects[i]);
+            }
         }
 
         private void RenderRoom(Graphics g)

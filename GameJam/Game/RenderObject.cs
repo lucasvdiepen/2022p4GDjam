@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using GameJam.TileEvents;
 
 namespace GameJam.Game
 {
@@ -8,6 +9,7 @@ namespace GameJam.Game
         internal RectangleF rectangle;
         internal float frame;
         internal float animationSpeed = 10;
+        internal ObjectBehaviour objectBehaviour;
 
         internal Rectangle[] frames;
 
