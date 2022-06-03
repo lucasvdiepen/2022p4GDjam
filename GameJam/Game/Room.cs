@@ -7,6 +7,7 @@ namespace GameJam.Game
         public Tile[][] tiles;
         internal int roomx;
         internal int roomy;
+        internal int roomz;
 
         public Tile[] GetAllTiles()
         {

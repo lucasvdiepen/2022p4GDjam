@@ -26,23 +26,25 @@ namespace GameJam.Game
                 string[] split= file.Name.Split('.');
                 int x = int.Parse(split[1]);
                 int y = int.Parse(split[2]);
-                Room r = Load(x,y, tileMap, tileObject);
-                rooms.Add($"{x}-{y}",r);
+                int z = int.Parse(split[3]);
+                Room r = Load(x,y,z, tileMap, tileObject);
+                rooms.Add($"{x}-{y}-{z}",r);
             }
         }
 
-        public Room GetRoom(int roomX, int roomY)
+        public Room GetRoom(int roomX, int roomY, int roomZ)
         {
-            return rooms[$"{roomX}-{roomY}"];
+            return rooms[$"{roomX}-{roomY}-{roomZ}"];
         }
-        private Room Load(int roomX, int roomY, Dictionary<char, Rectangle> tileMap, Dictionary<char, Func<TileBehaviour>> roomObjects)
+        private Room Load(int roomX, int roomY, int roomZ, Dictionary<char, Rectangle> tileMap, Dictionary<char, Func<TileBehaviour>> roomObjects)
         {
             Room room = new Room()
             {
                 roomx = roomX,
-                roomy = roomY
+                roomy = roomY,
+                roomz = roomZ
             };
-            string[] lines = levelDataSource.GetLines(roomX, roomY);
+            string[] lines = levelDataSource.GetLines(roomX, roomY, roomZ);
 
             room.tiles = new Tile[lines.Length][];
             for (int y = 0; y < lines.Length; y++)
