@@ -9,7 +9,7 @@ namespace GameJam.Game
         internal RectangleF rectangle;
         internal float frame;
         internal float animationSpeed = 10;
-        internal TileBehaviour objectBehaviour;
+        internal ObjectBehaviour objectBehaviour;
 
         internal Rectangle[] frames;
 

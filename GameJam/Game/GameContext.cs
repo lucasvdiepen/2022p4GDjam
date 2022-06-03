@@ -8,7 +8,6 @@ namespace GameJam.Game
 
         internal int tileSize = 16;
         internal RenderObject player = new RenderObject();
-        internal List<RenderObject> activeObjects = new List<RenderObject>();
         internal SpriteMap spriteMap = new SpriteMap();
         internal Room room;
     }

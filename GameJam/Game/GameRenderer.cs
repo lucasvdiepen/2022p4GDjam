@@ -41,7 +41,7 @@ namespace GameJam.Game
             RenderRoom(g);
             RenderObject(g, context.player);
 
-            List<RenderObject> activeObjects = context.activeObjects;
+            List<RenderObject> activeObjects = context.room.activeObjects;
 
             int c = activeObjects.Count;
             for(int i = 0; i < c; i++)

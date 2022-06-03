@@ -5,6 +5,7 @@ namespace GameJam.Game
     public class Room
     {
         public Tile[][] tiles;
+        public List<RenderObject> activeObjects = new List<RenderObject>();
         internal int roomx;
         internal int roomy;
 
