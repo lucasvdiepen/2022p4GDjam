@@ -52,6 +52,12 @@ namespace GameJam
                 rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
             };
 
+            gc.saw = new RenderObject()
+            {
+                frames = gc.spriteMap.GetSawFrames(),
+                rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
+            };
+
 
             ClientSize =
              new Size(
