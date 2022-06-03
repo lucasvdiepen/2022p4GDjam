@@ -15,7 +15,7 @@ namespace GameJam.TileEvents
             
         }
 
-        public virtual void Update(float frameTime, RenderObject renderObject)
+        public virtual void Update(UpdateEvent updateEvent)
         {
             
         }

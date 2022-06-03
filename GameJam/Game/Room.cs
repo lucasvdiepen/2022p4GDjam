@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GameJam.Game
 {
@@ -9,6 +10,11 @@ namespace GameJam.Game
         internal int roomx;
         internal int roomy;
         internal int roomz;
+
+        public Tile GetTile(int x, int y)
+        {
+            return tiles.SelectMany(ty => ty.Where(tx => tx.rectangle.Contains(x, y))).FirstOrDefault();
+        }
 
         public Tile[] GetAllTiles()
         {
