@@ -9,7 +9,7 @@ namespace GameJam.Game
         public Rectangle sprite;
         public float frame;
         internal Rectangle rectangle;
-        public TileBehaviour tileBehaviour;
+        public TileBehaviour objectBehaviour;
     }
 }
 

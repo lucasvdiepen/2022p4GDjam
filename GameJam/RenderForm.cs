@@ -1,8 +1,10 @@
 using GameJam.Events;
 using GameJam.Game;
+using GameJam.TileEvents;
 using GameJam.Tools;
 using NAudio.Wave;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -49,9 +51,17 @@ namespace GameJam
             gc.player = new RenderObject()
             {
                 frames = gc.spriteMap.GetPlayerFrames(),
-                rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
+                rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize)
             };
 
+            RenderObject testTrap = new RenderObject()
+            {
+                frames = gc.spriteMap.GetPlayerFrames(),
+                rectangle = new Rectangle(4 * gc.tileSize, 4 * gc.tileSize, gc.tileSize, gc.tileSize),
+                objectBehaviour = new Trap()
+            };
+
+            gc.activeObjects.Add(testTrap);//test
 
             ClientSize =
              new Size(
@@ -100,7 +110,7 @@ namespace GameJam
                     Direction = new Vector2(x, y)
                 };
 
-                CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
+                CanEnterEvent canEnterEvent = next.objectBehaviour?.CanEnter(newMoveEvent);
 
                 if (canEnterEvent == null || !canEnterEvent.BlockMovement)
                 {
@@ -110,13 +120,26 @@ namespace GameJam
 
                 if(canEnterEvent == null || !canEnterEvent.BlockEvents)
                 {
-                    _previousTile?.tileBehaviour?.OnExit(newMoveEvent);
-                    next.tileBehaviour?.OnEnter(newMoveEvent);
+                    _previousTile?.objectBehaviour?.OnExit(newMoveEvent);
+                    next.objectBehaviour?.OnEnter(newMoveEvent);
                 }
 
                 if (canEnterEvent == null || !canEnterEvent.BlockMovement || !canEnterEvent.BlockEvents)
                 {
                     _previousTile = next;
+                }
+
+                List<RenderObject> activeObjects = gc.activeObjects;
+
+                int c = activeObjects.Count;
+                for (int i = 0; i < c; i++)
+                {
+                    RenderObject currentObject = activeObjects[i];
+
+                    if((int)currentObject.rectangle.X == newx && (int)currentObject.rectangle.Y == newy)
+                    {
+                        currentObject.objectBehaviour?.OnEnter(newMoveEvent);
+                    }
                 }
             }
         }
@@ -131,7 +154,16 @@ namespace GameJam
             int c = allTiles.Length;
             for (int i = 0; i < c; i++)
             {
-                allTiles[i].tileBehaviour?.Update(frametime);
+                allTiles[i].objectBehaviour?.Update(frametime);
+            }
+
+            //Update active objects
+            List<RenderObject> activeObjects = gc.activeObjects;
+
+            int l = activeObjects.Count;
+            for(int i = 0; i < l; i++)
+            {
+                activeObjects[i].objectBehaviour?.Update(frametime);
             }
         }
         protected override void OnPaint(PaintEventArgs e)
