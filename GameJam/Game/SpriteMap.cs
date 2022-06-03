@@ -29,7 +29,7 @@ namespace GameJam.Game
             tileMap.Add('6', new Rectangle(86, 117, 16, 16));
 
             //Door Sprites North(N), South(S), West(W), East(E);
-            tileMap.Add('D', new Rectangle(2, 75, 16, 16));
+            tileMap.Add('N', new Rectangle(2, 75, 16, 16));
             tileMap.Add('S', new Rectangle(2, 96, 16, 16));
             tileMap.Add('W', new Rectangle(2, 117, 16, 16));
             tileMap.Add('E', new Rectangle(2, 138, 16, 16));
