@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GameJam.TileEvents
 {
-    public class TileBehaviour : ObjectBehaviour
+    public class TileBehaviour
     {
-        private bool isMoveBlocked;
+        private bool _isMoveBlocked;
 
         public TileBehaviour()
         {
@@ -18,15 +18,25 @@ namespace GameJam.TileEvents
 
         public TileBehaviour(bool isMoveBlocked)
         {
-            this.isMoveBlocked = isMoveBlocked;
+            this._isMoveBlocked = isMoveBlocked;
         }
 
         public virtual CanEnterEvent CanEnter(MoveEvent moveEvent)
         {
-            return new CanEnterEvent() { BlockMovement = isMoveBlocked, BlockEvents = true };
+            return new CanEnterEvent() { BlockMovement = _isMoveBlocked, BlockEvents = true };
+        }
+
+        public virtual void OnEnter(MoveEvent moveEvent)
+        {
+
         }
 
         public virtual void OnExit(MoveEvent moveEvent)
+        {
+
+        }
+
+        public virtual void Update(float frameTime)
         {
 
         }

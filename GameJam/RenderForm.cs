@@ -54,6 +54,15 @@ namespace GameJam
                 rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize)
             };
 
+            RenderObject testTrap = new RenderObject()
+            {
+                frames = gc.spriteMap.GetPlayerFrames(),
+                rectangle = new Rectangle(4 * gc.tileSize, 4 * gc.tileSize, gc.tileSize, gc.tileSize),
+                objectBehaviour = new Trap(2)
+            };
+
+            gc.room.activeObjects.Add(testTrap);
+
             ClientSize =
              new Size(
 
@@ -154,7 +163,7 @@ namespace GameJam
             int l = activeObjects.Count;
             for(int i = 0; i < l; i++)
             {
-                activeObjects[i].objectBehaviour?.Update(frametime);
+                activeObjects[i].objectBehaviour?.Update(frametime, activeObjects[i]);
             }
         }
         protected override void OnPaint(PaintEventArgs e)
