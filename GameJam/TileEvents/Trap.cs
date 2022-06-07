@@ -15,12 +15,15 @@ namespace GameJam.TileEvents
         private float _moveTime;
         private float _timeElapsed;
         private Direction2D _direction2D;
-        private int _direction = 1;
+        private int _direction;
 
         public Trap(float moveTime)
         {
             _moveTime = moveTime;
-            _direction2D = Direction2D.Horizontal;
+
+            Random rnd = new Random();
+            _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
+            _direction2D = (Direction2D)rnd.Next(0, Enum.GetValues(typeof(Direction2D)).Length);
         }
 
         public override void OnEnter(MoveEvent moveEvent)
