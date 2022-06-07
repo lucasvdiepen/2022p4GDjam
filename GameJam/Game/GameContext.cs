@@ -1,4 +1,6 @@
-﻿namespace GameJam.Game
+﻿using System.Collections.Generic;
+
+namespace GameJam.Game
 {
     public class GameContext
     {

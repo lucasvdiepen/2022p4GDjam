@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GameJam.Game; 
 
 namespace GameJam
 {
@@ -20,6 +21,8 @@ namespace GameJam
             Application.SetCompatibleTextRenderingDefault(false);
 
             RenderForm form = new RenderForm();
+            Health hp = new Health(3);
+
             form.FormClosing += Form_FormClosing;
             form.Show();
 
@@ -30,7 +33,7 @@ namespace GameJam
                 form.Logic(frametime);
                 form.Invalidate();
                 Application.DoEvents();
-
+ 
 
                 DateTime next = DateTime.Now;
                 double totalMilliseconds = next.Subtract(dateTime).TotalMilliseconds;

@@ -1,13 +1,15 @@
 using System;
 using System.Drawing;
+using GameJam.TileEvents;
 
 namespace GameJam.Game
 {
-    class RenderObject
+    public class RenderObject
     {
         internal RectangleF rectangle;
         internal float frame;
         internal float animationSpeed = 10;
+        internal ObjectBehaviour objectBehaviour;
 
         internal Rectangle[] frames;
 
