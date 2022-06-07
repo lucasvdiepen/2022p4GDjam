@@ -29,7 +29,6 @@ namespace GameJam
             KeyDown += RenderForm_KeyDown;
             FormClosing += Form1_FormClosing;
             Load += RenderForm_Load;
-
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
