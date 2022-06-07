@@ -36,8 +36,14 @@ namespace GameJam.Game
             tileMap.Add('W', new Rectangle(2, 117, 16, 16));
             tileMap.Add('E', new Rectangle(2, 138, 16, 16));
 
-            tileObjects.Add('D', () => { return new Door(); });
-            tileObjects.Add('#', () => { return new TileBehaviour(true); });
+            tileObjects.Add('N', () => { return new Door(); });
+            tileObjects.Add('W', () => { return new Door(); });
+            tileObjects.Add('E', () => { return new Door(); });
+            tileObjects.Add('S', () => { return new Door(); });
+            //tileObjects.Add('#', () => { return new TileBehaviour(true); });
+            tileObjects.Add('1', () => { return new TileBehaviour(true); });
+            tileObjects.Add('2', () => { return new TileBehaviour(true); });
+            tileObjects.Add('3', () => { return new TileBehaviour(true); });
 
             playerAnimation = new Rectangle[]
             {
