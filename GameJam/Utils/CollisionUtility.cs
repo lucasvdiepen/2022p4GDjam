@@ -9,9 +9,9 @@ namespace GameJam.Utils
 {
     public static class CollisionUtility
     {
-        public static bool HasCollision(RectangleF rectacle1, RectangleF rectangle2)
+        public static bool HasCollision(RectangleF rectangle1, RectangleF rectangle2)
         {
-            return (int)rectacle1.X == (int)rectangle2.X && (int)rectacle1.Y == (int)rectangle2.Y;
+            return (int)rectangle1.X == (int)rectangle2.X && (int)rectangle1.Y == (int)rectangle2.Y;
         }
     }
 }
