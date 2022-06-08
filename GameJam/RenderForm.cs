@@ -64,7 +64,7 @@ namespace GameJam
             RenderObject testTurret = new RenderObject()
             {
                 frames = gc.spriteMap.GetPlayerFrames(),
-                rectangle = new Rectangle(6 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
+                rectangle = new Rectangle(2 * gc.tileSize, 1 * gc.tileSize, gc.tileSize, gc.tileSize),
                 objectBehaviour = new Turret(2)
             };
 
@@ -184,7 +184,7 @@ namespace GameJam
             List<RenderObject> activeObjects = gc.room.activeObjects;
 
             int l = activeObjects.Count;
-            for(int i = 0; i < l; i++)
+            for(int i = l - 1; i >= 0; i--)
             {
                 newUpdateEvent.RenderObject = activeObjects[i];
                 activeObjects[i].objectBehaviour?.Update(newUpdateEvent);
