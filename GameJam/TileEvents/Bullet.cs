@@ -1,5 +1,6 @@
 ﻿using GameJam.Events;
 using GameJam.Game;
+using GameJam.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,6 +24,11 @@ namespace GameJam.TileEvents
             Move(updateEvent.GameContext, updateEvent.RenderObject);
         }
 
+        public override void OnEnter(MoveEvent moveEvent)
+        {
+            moveEvent.GameContext.playerHealth.RemoveHealth(1);
+        }
+
         private void Move(GameContext gameContext, RenderObject renderObject)
         {
             var newX = renderObject.rectangle.X + gameContext.tileSize * _direction.x;
@@ -37,7 +43,7 @@ namespace GameJam.TileEvents
             renderObject.rectangle.X = newX;
             renderObject.rectangle.Y = newY;
 
-            if ((int)renderObject.rectangle.X == (int)gameContext.player.rectangle.X && (int)renderObject.rectangle.Y == (int)gameContext.player.rectangle.Y)
+            if(CollisionUtility.HasCollision(renderObject.rectangle, gameContext.player.rectangle))
             {
                 Debug.WriteLine("Deal damage to player");
                 gameContext.playerHealth.RemoveHealth(1);

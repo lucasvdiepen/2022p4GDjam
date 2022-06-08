@@ -27,6 +27,10 @@ namespace GameJam.TileEvents
         {
             Vector2 spawnPosition = new Vector2(renderObject.rectangle.X + gameContext.tileSize * _direction.x, renderObject.rectangle.Y + gameContext.tileSize * _direction.y);
 
+            if (gameContext.room.IsMoveBlocked((int)spawnPosition.x, (int)spawnPosition.y)) return;
+
+
+
             var newBullet = new RenderObject()
             {
                 frames = gameContext.spriteMap.GetPlayerFrames(),

@@ -108,6 +108,7 @@
     <Compile Include="Game\RenderObject.cs" />
     <Compile Include="Game\Room.cs" />
     <Compile Include="Game\Tile.cs" />
+    <Compile Include="Utils\CollisionUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
