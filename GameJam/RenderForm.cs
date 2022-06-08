@@ -61,7 +61,15 @@ namespace GameJam
                 objectBehaviour = new Trap(2)
             };
 
+            RenderObject testTurret = new RenderObject()
+            {
+                frames = gc.spriteMap.GetPlayerFrames(),
+                rectangle = new Rectangle(6 * gc.tileSize, 1 * gc.tileSize, gc.tileSize, gc.tileSize),
+                objectBehaviour = new Turret(2)
+            };
+
             gc.room.activeObjects.Add(testTrap);
+            gc.room.activeObjects.Add(testTurret);
 
             ClientSize =
              new Size(
