@@ -16,6 +16,18 @@ namespace GameJam.Game
             return tiles.SelectMany(ty => ty.Where(tx => tx.rectangle.Contains(x, y))).FirstOrDefault();
         }
 
+        public RenderObject[] GetActiveObjects(int x, int y)
+        {
+            List<RenderObject> list = new List<RenderObject>();
+
+            foreach(RenderObject renderObject in activeObjects)
+            {
+                if ((int)renderObject.rectangle.X == x && (int)renderObject.rectangle.Y == y) list.Add(renderObject);
+            }
+
+            return list.ToArray();
+        }
+
         public Tile[] GetAllTiles()
         {
             List<Tile> allTiles = new List<Tile>();

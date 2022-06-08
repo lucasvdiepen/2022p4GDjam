@@ -110,31 +110,40 @@ namespace GameJam
                     Direction = new Vector2(x, y)
                 };
 
-                CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
+                RenderObject[] activeRenderObjects = gc.room.GetActiveObjects((int)newx, (int)newy);
 
-                if (canEnterEvent == null || !canEnterEvent.BlockMovement)
+                bool activeObjectsBlocking = false;
+                foreach(RenderObject renderObject in activeRenderObjects)
                 {
-                    player.rectangle.X = newx;
-                    player.rectangle.Y = newy;
-
-                    List<RenderObject> activeObjects = gc.room.activeObjects;
-
-                    int c = activeObjects.Count;
-                    for (int i = 0; i < c; i++)
+                    if (renderObject.objectBehaviour != null && renderObject.objectBehaviour.CanEnter(newMoveEvent).BlockMovement)
                     {
-                        RenderObject currentObject = activeObjects[i];
-
-                        if ((int)currentObject.rectangle.X == newx && (int)currentObject.rectangle.Y == newy)
-                        {
-                            currentObject.objectBehaviour?.OnEnter(newMoveEvent);
-                        }
+                        activeObjectsBlocking = true;
+                        break;
                     }
                 }
 
-                if(canEnterEvent == null || !canEnterEvent.BlockEvents)
+                CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
+
+                if ((canEnterEvent == null || !canEnterEvent.BlockMovement) && !activeObjectsBlocking)
+                {
+                    player.rectangle.X = newx;
+                    player.rectangle.Y = newy;
+                }
+
+                //Call tile object events
+                if (canEnterEvent == null || !canEnterEvent.BlockEvents)
                 {
                     _previousTile?.tileBehaviour?.OnExit(newMoveEvent);
                     next.tileBehaviour?.OnEnter(newMoveEvent);
+                }
+
+                //Call render object events
+                foreach (RenderObject renderObject in activeRenderObjects)
+                {
+                    if (renderObject.objectBehaviour == null || !renderObject.objectBehaviour.CanEnter(newMoveEvent).BlockEvents)
+                    {
+                        renderObject.objectBehaviour?.OnEnter(newMoveEvent);
+                    }
                 }
 
                 if (canEnterEvent == null || !canEnterEvent.BlockMovement || !canEnterEvent.BlockEvents)

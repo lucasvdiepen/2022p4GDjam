@@ -52,7 +52,7 @@ namespace GameJam.TileEvents
 
             if(nextTile != null)
             {
-                if(nextTile.tileBehaviour != null && nextTile.tileBehaviour.IsMoveBlocked())
+                if(nextTile.tileBehaviour != null && nextTile.tileBehaviour.IsMoveBlocked)
                 {
                     InvertMove(gameContext, renderObject);
                     return;
