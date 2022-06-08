@@ -10,17 +10,13 @@ using System.Threading.Tasks;
 
 namespace GameJam.TileEvents
 {
-    public class Trap : ObjectBehaviour
+    public class Trap : TimerBehaviour
     {
-        private float _moveTime;
-        private float _timeElapsed;
         private Direction2D _direction2D;
         private int _direction;
 
-        public Trap(float moveTime)
+        public Trap(float moveTime) : base(moveTime)
         {
-            _moveTime = moveTime;
-
             Random rnd = new Random();
             _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
             _direction2D = (Direction2D)rnd.Next(0, Enum.GetValues(typeof(Direction2D)).Length);
@@ -29,19 +25,12 @@ namespace GameJam.TileEvents
         public override void OnEnter(MoveEvent moveEvent)
         {
             //Deal damage to player
-            Debug.WriteLine("Deal damage to player");
             moveEvent.GameContext.playerHealth.RemoveHealth(1);
         }
 
-        public override void Update(UpdateEvent updateEvent)
+        public override void TimerTick(UpdateEvent updateEvent)
         {
-            _timeElapsed += updateEvent.FrameTime;
-
-            if(_timeElapsed >= _moveTime)
-            {
-                _timeElapsed = 0;
-                Move(updateEvent.GameContext, updateEvent.RenderObject);
-            }
+            Move(updateEvent.GameContext, updateEvent.RenderObject);
         }
 
         private void Move(GameContext gameContext, RenderObject renderObject)
@@ -74,7 +63,6 @@ namespace GameJam.TileEvents
 
                 if((int)renderObject.rectangle.X == (int)gameContext.player.rectangle.X && (int)renderObject.rectangle.Y == (int)gameContext.player.rectangle.Y)
                 {
-                    Debug.WriteLine("Deal damage to player");
                     gameContext.playerHealth.RemoveHealth(1);
                 }
             }
