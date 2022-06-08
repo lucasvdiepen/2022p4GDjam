@@ -21,11 +21,6 @@ namespace GameJam.TileEvents
             get => _isMoveBlocked;
         }
 
-        public virtual CanEnterEvent CanEnter(MoveEvent moveEvent)
-        {
-            return new CanEnterEvent() { BlockMovement = _isMoveBlocked, BlockEvents = _isMoveBlocked };
-        }
-
         public virtual void OnEnter(MoveEvent moveEvent)
         {
             

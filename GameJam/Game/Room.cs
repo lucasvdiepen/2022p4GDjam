@@ -32,17 +32,29 @@ namespace GameJam.Game
         {
             Tile tile = GetTile(x, y);
 
-            if (tile == null) return true;
-            if (tile.tileBehaviour != null && tile.tileBehaviour.IsMoveBlocked) return true;
+            return IsMoveBlocked(tile);
+        }
 
+        public bool IsActiveRenderObjectBlocking(int x, int y)
+        {
             RenderObject[] activeRenderObjects = GetActiveObjects(x, y);
 
-            foreach(RenderObject activeObject in activeRenderObjects)
+            foreach (RenderObject activeObject in activeRenderObjects)
             {
                 if (activeObject.objectBehaviour != null && activeObject.objectBehaviour.IsMoveBlocked) return true;
             }
 
             return false;
+        }
+
+        public bool IsMoveBlocked(Tile tile)
+        {
+            //Check if tile is blocking movement
+            if (tile == null) return true;
+            if (tile.tileBehaviour != null && tile.tileBehaviour.IsMoveBlocked) return true;
+
+            //Check if active render objects are blocking movement
+            return IsActiveRenderObjectBlocking(tile.rectangle.X, tile.rectangle.Y);
         }
 
         public Tile[] GetAllTiles()

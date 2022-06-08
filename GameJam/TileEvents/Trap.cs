@@ -1,6 +1,7 @@
 ﻿using GameJam.Enums;
 using GameJam.Events;
 using GameJam.Game;
+using GameJam.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -48,29 +49,17 @@ namespace GameJam.TileEvents
                     break;
             }
 
-            Tile nextTile = gameContext.room.GetTile(newX, newY);
-
-            if(nextTile != null)
-            {
-                if(gameContext.room.IsMoveBlocked(newX, newY))
-                {
-                    InvertMove(gameContext, renderObject);
-                    return;
-                }
-
-                renderObject.rectangle.X = newX;
-                renderObject.rectangle.Y = newY;
-
-                if((int)renderObject.rectangle.X == (int)gameContext.player.rectangle.X && (int)renderObject.rectangle.Y == (int)gameContext.player.rectangle.Y)
-                {
-                    gameContext.playerHealth.RemoveHealth(1);
-                }
-            }
-            else
+            if(gameContext.room.IsMoveBlocked(newX, newY))
             {
                 InvertMove(gameContext, renderObject);
                 return;
             }
+
+            renderObject.rectangle.X = newX;
+            renderObject.rectangle.Y = newY;
+
+            //Deal damage to player
+            if(CollisionUtility.HasCollision(renderObject.rectangle, gameContext.player.rectangle)) gameContext.playerHealth.RemoveHealth(1);
         }
 
         private void InvertMove(GameContext gameContext, RenderObject renderObject)

@@ -118,24 +118,21 @@ namespace GameJam
                     Direction = new Vector2(x, y)
                 };
 
-                RenderObject[] activeRenderObjects = gc.room.GetActiveObjects((int)newx, (int)newy);
-
-                bool activeObjectsBlocking = false;
-                foreach(RenderObject renderObject in activeRenderObjects)
-                {
-                    if (renderObject.objectBehaviour != null && renderObject.objectBehaviour.CanEnter(newMoveEvent).BlockMovement)
-                    {
-                        activeObjectsBlocking = true;
-                        break;
-                    }
-                }
-
                 CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
 
-                if ((canEnterEvent == null || !canEnterEvent.BlockMovement) && !activeObjectsBlocking)
+                //Move the player
+                if ((canEnterEvent == null || !canEnterEvent.BlockMovement) && !gc.room.IsActiveRenderObjectBlocking((int)newx, (int)newy))
                 {
                     player.rectangle.X = newx;
                     player.rectangle.Y = newy;
+
+                    RenderObject[] activeRenderObjects = gc.room.GetActiveObjects((int)newx, (int)newy);
+
+                    //Call render object events
+                    foreach (RenderObject renderObject in activeRenderObjects)
+                    {
+                        renderObject.objectBehaviour?.OnEnter(newMoveEvent);
+                    }
                 }
 
                 //Call tile object events
@@ -143,15 +140,6 @@ namespace GameJam
                 {
                     _previousTile?.tileBehaviour?.OnExit(newMoveEvent);
                     next.tileBehaviour?.OnEnter(newMoveEvent);
-                }
-
-                //Call render object events
-                foreach (RenderObject renderObject in activeRenderObjects)
-                {
-                    if (renderObject.objectBehaviour == null || !renderObject.objectBehaviour.CanEnter(newMoveEvent).BlockEvents)
-                    {
-                        renderObject.objectBehaviour?.OnEnter(newMoveEvent);
-                    }
                 }
 
                 if (canEnterEvent == null || !canEnterEvent.BlockMovement || !canEnterEvent.BlockEvents)

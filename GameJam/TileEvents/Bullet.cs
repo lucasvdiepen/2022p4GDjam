@@ -43,11 +43,8 @@ namespace GameJam.TileEvents
             renderObject.rectangle.X = newX;
             renderObject.rectangle.Y = newY;
 
-            if(CollisionUtility.HasCollision(renderObject.rectangle, gameContext.player.rectangle))
-            {
-                Debug.WriteLine("Deal damage to player");
-                gameContext.playerHealth.RemoveHealth(1);
-            }
+            //Deal damage to player
+            if (CollisionUtility.HasCollision(renderObject.rectangle, gameContext.player.rectangle)) gameContext.playerHealth.RemoveHealth(1);
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using GameJam.Events;
 using GameJam.Game;
+using GameJam.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -29,8 +31,6 @@ namespace GameJam.TileEvents
 
             if (gameContext.room.IsMoveBlocked((int)spawnPosition.x, (int)spawnPosition.y)) return;
 
-
-
             var newBullet = new RenderObject()
             {
                 frames = gameContext.spriteMap.GetPlayerFrames(),
@@ -39,6 +39,9 @@ namespace GameJam.TileEvents
             };
 
             gameContext.room.activeObjects.Add(newBullet);
+
+            //Deal damage to player
+            if (CollisionUtility.HasCollision(newBullet.rectangle, gameContext.player.rectangle)) gameContext.playerHealth.RemoveHealth(1);
         }
     }
 }
