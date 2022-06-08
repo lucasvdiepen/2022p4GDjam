@@ -1,4 +1,5 @@
 ﻿using GameJam.Events;
+using GameJam.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace GameJam.TileEvents
             
         }
 
-        public virtual void Update(float frameTime)
+        public virtual void Update(UpdateEvent updateEvent)
         {
             
         }

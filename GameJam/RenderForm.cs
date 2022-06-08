@@ -54,6 +54,15 @@ namespace GameJam
                 rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize)
             };
 
+            RenderObject testTrap = new RenderObject()
+            {
+                frames = gc.spriteMap.GetPlayerFrames(),
+                rectangle = new Rectangle(7 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
+                objectBehaviour = new Trap(2)
+            };
+
+            gc.room.activeObjects.Add(testTrap);
+
             ClientSize =
              new Size(
 
@@ -88,7 +97,7 @@ namespace GameJam
             float newx = player.rectangle.X + (x * gc.tileSize);
             float newy = player.rectangle.Y + (y * gc.tileSize);
 
-            Tile next = gc.room.tiles.SelectMany(ty => ty.Where(tx => tx.rectangle.Contains((int)newx, (int)newy))).FirstOrDefault();
+            Tile next = gc.room.GetTile((int)newx, (int)newy);
 
             if (next != null)
             {
@@ -139,13 +148,19 @@ namespace GameJam
         {
             this.frametime = frametime;
 
+            var newUpdateEvent = new UpdateEvent()
+            {
+                FrameTime = frametime,
+                GameContext = gc
+            };
+
             //Update all tiles
             Tile[] allTiles = gc.room.GetAllTiles();
 
             int c = allTiles.Length;
             for (int i = 0; i < c; i++)
             {
-                allTiles[i].tileBehaviour?.Update(frametime);
+                allTiles[i].tileBehaviour?.Update(newUpdateEvent);
             }
 
             //Update active objects
@@ -154,7 +169,8 @@ namespace GameJam
             int l = activeObjects.Count;
             for(int i = 0; i < l; i++)
             {
-                activeObjects[i].objectBehaviour?.Update(frametime);
+                newUpdateEvent.RenderObject = activeObjects[i];
+                activeObjects[i].objectBehaviour?.Update(newUpdateEvent);
             }
         }
         protected override void OnPaint(PaintEventArgs e)
