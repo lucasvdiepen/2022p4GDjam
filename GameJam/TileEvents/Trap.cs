@@ -30,6 +30,7 @@ namespace GameJam.TileEvents
         {
             //Deal damage to player
             Debug.WriteLine("Deal damage to player");
+            moveEvent.GameContext.playerHealth.RemoveHealth(1);
         }
 
         public override void Update(UpdateEvent updateEvent)
@@ -64,20 +65,30 @@ namespace GameJam.TileEvents
             {
                 if(nextTile.tileBehaviour != null && nextTile.tileBehaviour.IsMoveBlocked())
                 {
-                    _direction *= -1;
-                    Move(gameContext, renderObject);
+                    InvertMove(gameContext, renderObject);
                     return;
                 }
 
                 renderObject.rectangle.X = newX;
                 renderObject.rectangle.Y = newY;
+
+                if((int)renderObject.rectangle.X == (int)gameContext.player.rectangle.X && (int)renderObject.rectangle.Y == (int)gameContext.player.rectangle.Y)
+                {
+                    Debug.WriteLine("Deal damage to player");
+                    gameContext.playerHealth.RemoveHealth(1);
+                }
             }
             else
             {
-                _direction *= -1;
-                Move(gameContext, renderObject);
+                InvertMove(gameContext, renderObject);
                 return;
             }
+        }
+
+        private void InvertMove(GameContext gameContext, RenderObject renderObject)
+        {
+            _direction *= -1;
+            Move(gameContext, renderObject);
         }
     }
 }
