@@ -82,6 +82,7 @@
     <Compile Include="Game\Health.cs" />
     <Compile Include="Events\CanEnterEvent.cs" />
     <Compile Include="Events\MoveEvent.cs" />
+    <Compile Include="TileEvents\Bullet.cs" />
     <Compile Include="TileEvents\Door.cs" />
     <Compile Include="TileEvents\ObjectBehaviour.cs" />
     <Compile Include="Game\SpriteMap.cs" />

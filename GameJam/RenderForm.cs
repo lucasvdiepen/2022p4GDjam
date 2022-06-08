@@ -64,7 +64,7 @@ namespace GameJam
             RenderObject testTurret = new RenderObject()
             {
                 frames = gc.spriteMap.GetPlayerFrames(),
-                rectangle = new Rectangle(6 * gc.tileSize, 1 * gc.tileSize, gc.tileSize, gc.tileSize),
+                rectangle = new Rectangle(6 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
                 objectBehaviour = new Turret(2)
             };
 

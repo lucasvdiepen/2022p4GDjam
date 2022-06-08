@@ -28,6 +28,23 @@ namespace GameJam.Game
             return list.ToArray();
         }
 
+        public bool IsMoveBlocked(int x, int y)
+        {
+            Tile tile = GetTile(x, y);
+
+            if (tile == null) return true;
+            if (tile.tileBehaviour != null && tile.tileBehaviour.IsMoveBlocked) return true;
+
+            RenderObject[] activeRenderObjects = GetActiveObjects(x, y);
+
+            foreach(RenderObject activeObject in activeRenderObjects)
+            {
+                if (activeObject.objectBehaviour != null && activeObject.objectBehaviour.IsMoveBlocked) return true;
+            }
+
+            return false;
+        }
+
         public Tile[] GetAllTiles()
         {
             List<Tile> allTiles = new List<Tile>();

@@ -10,8 +10,8 @@ namespace GameJam.TileEvents
 {
     public class Turret : TimerBehaviour
     {
-        int xDirection = 0;
-        int yDirection = 1;
+        int _xDirection = 0;
+        int _yDirection = 1;
 
         public Turret(float shootDelay) : base(true, shootDelay)
         {
@@ -25,7 +25,7 @@ namespace GameJam.TileEvents
 
         private void Shoot(GameContext gameContext, RenderObject renderObject)
         {
-            Vector2 spawnPosition = new Vector2(renderObject.rectangle.X + gameContext.tileSize * xDirection, renderObject.rectangle.Y + gameContext.tileSize * yDirection);
+            Vector2 spawnPosition = new Vector2(renderObject.rectangle.X + gameContext.tileSize * _xDirection, renderObject.rectangle.Y + gameContext.tileSize * _yDirection);
         }
     }
 }
