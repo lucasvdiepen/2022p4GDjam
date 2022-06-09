@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameJam.TileEvents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace GameJam.Game
 {
     public class TrapGenerator
     {
-        private const int traps = 5;
+        private ObjectBehaviour[] traps;
+        private const int trapsPerRoom = 5;
 
         public void GenerateTraps(Room room)
         {
