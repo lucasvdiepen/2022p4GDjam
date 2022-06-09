@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Audio.cs" />
     <Compile Include="Enums\Direction2D.cs" />
+    <Compile Include="Enums\TrapType.cs" />
     <Compile Include="Events\UpdateEvent.cs" />
     <Compile Include="Game\Health.cs" />
     <Compile Include="Events\CanEnterEvent.cs" />
