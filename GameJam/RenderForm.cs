@@ -61,7 +61,15 @@ namespace GameJam
                 objectBehaviour = new Trap(2)
             };
 
+            RenderObject testTurret = new RenderObject()
+            {
+                frames = gc.spriteMap.GetPlayerFrames(),
+                rectangle = new Rectangle(2 * gc.tileSize, 1 * gc.tileSize, gc.tileSize, gc.tileSize),
+                objectBehaviour = new Turret(2)
+            };
+
             gc.room.activeObjects.Add(testTrap);
+            gc.room.activeObjects.Add(testTurret);
 
             ClientSize =
              new Size(
@@ -112,26 +120,23 @@ namespace GameJam
 
                 CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
 
-                if (canEnterEvent == null || !canEnterEvent.BlockMovement)
+                //Move the player
+                if ((canEnterEvent == null || !canEnterEvent.BlockMovement) && !gc.room.IsActiveRenderObjectBlocking((int)newx, (int)newy))
                 {
                     player.rectangle.X = newx;
                     player.rectangle.Y = newy;
 
-                    List<RenderObject> activeObjects = gc.room.activeObjects;
+                    RenderObject[] activeRenderObjects = gc.room.GetActiveObjects((int)newx, (int)newy);
 
-                    int c = activeObjects.Count;
-                    for (int i = 0; i < c; i++)
+                    //Call render object events
+                    foreach (RenderObject renderObject in activeRenderObjects)
                     {
-                        RenderObject currentObject = activeObjects[i];
-
-                        if ((int)currentObject.rectangle.X == newx && (int)currentObject.rectangle.Y == newy)
-                        {
-                            currentObject.objectBehaviour?.OnEnter(newMoveEvent);
-                        }
+                        renderObject.objectBehaviour?.OnEnter(newMoveEvent);
                     }
                 }
 
-                if(canEnterEvent == null || !canEnterEvent.BlockEvents)
+                //Call tile object events
+                if (canEnterEvent == null || !canEnterEvent.BlockEvents)
                 {
                     _previousTile?.tileBehaviour?.OnExit(newMoveEvent);
                     next.tileBehaviour?.OnEnter(newMoveEvent);
@@ -167,7 +172,7 @@ namespace GameJam
             List<RenderObject> activeObjects = gc.room.activeObjects;
 
             int l = activeObjects.Count;
-            for(int i = 0; i < l; i++)
+            for(int i = l - 1; i >= 0; i--)
             {
                 newUpdateEvent.RenderObject = activeObjects[i];
                 activeObjects[i].objectBehaviour?.Update(newUpdateEvent);
