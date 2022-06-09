@@ -13,6 +13,7 @@ namespace GameJam.TileEvents
 {
     public class Trap : TimerBehaviour
     {
+        // todo: moet bepaald worden door trap generator
         private Direction2D _direction2D;
         private int _direction;
 
