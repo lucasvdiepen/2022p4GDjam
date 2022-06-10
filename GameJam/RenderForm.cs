@@ -56,7 +56,7 @@ namespace GameJam
 
             RenderObject testTrap = new RenderObject()
             {
-                frames = gc.spriteMap.GetPlayerFrames(),
+                frames = gc.spriteMap.GetSawFrames(),
                 rectangle = new Rectangle(7 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
                 objectBehaviour = new Trap(2)
             };
