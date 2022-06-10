@@ -54,11 +54,9 @@ namespace GameJam
                 rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize)
             };
 
-
-
             RenderObject testTrap = new RenderObject()
             {
-                frames = gc.spriteMap.GetSawFrames(),
+                frames = gc.spriteMap.GetPlayerFrames(),
                 rectangle = new Rectangle(7 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
                 objectBehaviour = new Trap(2)
             };
