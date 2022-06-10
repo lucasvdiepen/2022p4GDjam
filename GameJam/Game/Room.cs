@@ -16,6 +16,47 @@ namespace GameJam.Game
             return tiles.SelectMany(ty => ty.Where(tx => tx.rectangle.Contains(x, y))).FirstOrDefault();
         }
 
+        public RenderObject[] GetActiveObjects(int x, int y)
+        {
+            List<RenderObject> list = new List<RenderObject>();
+
+            foreach(RenderObject renderObject in activeObjects)
+            {
+                if ((int)renderObject.rectangle.X == x && (int)renderObject.rectangle.Y == y) list.Add(renderObject);
+            }
+
+            return list.ToArray();
+        }
+
+        public bool IsMoveBlocked(int x, int y)
+        {
+            Tile tile = GetTile(x, y);
+
+            return IsMoveBlocked(tile);
+        }
+
+        public bool IsActiveRenderObjectBlocking(int x, int y)
+        {
+            RenderObject[] activeRenderObjects = GetActiveObjects(x, y);
+
+            foreach (RenderObject activeObject in activeRenderObjects)
+            {
+                if (activeObject.objectBehaviour != null && activeObject.objectBehaviour.IsMoveBlocked) return true;
+            }
+
+            return false;
+        }
+
+        public bool IsMoveBlocked(Tile tile)
+        {
+            //Check if tile is blocking movement
+            if (tile == null) return true;
+            if (tile.tileBehaviour != null && tile.tileBehaviour.IsMoveBlocked) return true;
+
+            //Check if active render objects are blocking movement
+            return IsActiveRenderObjectBlocking(tile.rectangle.X, tile.rectangle.Y);
+        }
+
         public Tile[] GetAllTiles()
         {
             List<Tile> allTiles = new List<Tile>();

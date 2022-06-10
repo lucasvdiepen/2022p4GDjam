@@ -1,6 +1,7 @@
 ﻿using GameJam.Enums;
 using GameJam.Events;
 using GameJam.Game;
+using GameJam.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,10 +14,11 @@ namespace GameJam.TileEvents
 {
     public class Trap : TimerBehaviour, ITrap
     {
+        // todo: moet bepaald worden door trap generator
         private Direction2D _direction2D;
         private int _direction;
 
-        public Trap(float moveTime) : base(moveTime)
+        public Trap(float moveTime) : base(false, moveTime)
         {
             Random rnd = new Random();
             _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
@@ -49,29 +51,17 @@ namespace GameJam.TileEvents
                     break;
             }
 
-            Tile nextTile = gameContext.room.GetTile(newX, newY);
-
-            if(nextTile != null)
-            {
-                if(nextTile.tileBehaviour != null && nextTile.tileBehaviour.IsMoveBlocked())
-                {
-                    InvertMove(gameContext, renderObject);
-                    return;
-                }
-
-                renderObject.rectangle.X = newX;
-                renderObject.rectangle.Y = newY;
-
-                if((int)renderObject.rectangle.X == (int)gameContext.player.rectangle.X && (int)renderObject.rectangle.Y == (int)gameContext.player.rectangle.Y)
-                {
-                    gameContext.playerHealth.RemoveHealth(1);
-                }
-            }
-            else
+            if(gameContext.room.IsMoveBlocked(newX, newY))
             {
                 InvertMove(gameContext, renderObject);
                 return;
             }
+
+            renderObject.rectangle.X = newX;
+            renderObject.rectangle.Y = newY;
+
+            //Deal damage to player
+            if(CollisionUtility.HasCollision(renderObject.rectangle, gameContext.player.rectangle)) gameContext.playerHealth.RemoveHealth(1);
         }
 
         private void InvertMove(GameContext gameContext, RenderObject renderObject)
