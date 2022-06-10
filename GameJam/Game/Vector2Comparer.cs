@@ -10,7 +10,7 @@ namespace GameJam.Game
     {
         public bool Equals(Vector2 x, Vector2 y)
         {
-            return (int)x.x == (int)y.x && (int)x.y == (int)y.y;
+            return x.x == y.x && x.y == y.y;
         }
 
         public int GetHashCode(Vector2 obj)

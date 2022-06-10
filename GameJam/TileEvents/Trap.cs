@@ -74,7 +74,12 @@ namespace GameJam.TileEvents
         {
             Tile[] buildableTiles = room.GetBuildableTiles();
 
-            return new Vector2(16, 16);
+            if (buildableTiles.Length == 0) return null;
+
+            Random rnd = new Random();
+            var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
+
+            return new Vector2(rect.X, rect.Y);
 
             //throw new NotImplementedException();
         }

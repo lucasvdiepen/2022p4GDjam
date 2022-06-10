@@ -29,7 +29,7 @@ namespace GameJam.Game
                 var newRenderObject = new RenderObject()
                 {
                     frames = newTrapInterface.GetFrames(spriteMap),
-                    rectangle = new Rectangle((int)suitableLocation.x, (int)suitableLocation.y, tileSize, tileSize),
+                    rectangle = new Rectangle(suitableLocation.x, suitableLocation.y, tileSize, tileSize),
                     objectBehaviour = newTrap
                 };
 
