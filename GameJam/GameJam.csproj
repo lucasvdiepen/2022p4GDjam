@@ -84,6 +84,7 @@
     <Compile Include="Events\CanEnterEvent.cs" />
     <Compile Include="Events\MoveEvent.cs" />
     <Compile Include="Game\TrapGenerator.cs" />
+    <Compile Include="Game\Vector2Comparer.cs" />
     <Compile Include="TileEvents\Bullet.cs" />
     <Compile Include="TileEvents\Door.cs" />
     <Compile Include="TileEvents\ITrap.cs" />

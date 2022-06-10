@@ -16,7 +16,7 @@ namespace GameJam.TileEvents
         // todo: moet bepaald worden door trap generator
         Vector2 _direction = new Vector2(1, 0);
 
-        public Turret(float shootDelay) : base(true, shootDelay)
+        public Turret(float shootDelay) : base(true, false, shootDelay)
         {
 
         }

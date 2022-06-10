@@ -19,7 +19,7 @@ namespace GameJam.Game
             tileMap.Add('!', new Rectangle(66, 75, 16, 16));
 
             tileObjects.Add('D', () => { return new Door(); });
-            tileObjects.Add('#', () => { return new TileBehaviour(true); });
+            tileObjects.Add('#', () => { return new TileBehaviour(true, false); });
 
             playerAnimation = new Rectangle[]
                 {

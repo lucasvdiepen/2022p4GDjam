@@ -76,7 +76,23 @@ namespace GameJam.Game
 
         public Tile[] GetBuildableTiles()
         {
+            Dictionary<Vector2, Tile> buildableTiles = new Dictionary<Vector2, Tile>(new Vector2Comparer());
 
+            Tile[] allTiles = GetAllTiles();
+
+            foreach(Tile tile in allTiles)
+            {
+                if (tile.tileBehaviour == null || tile.tileBehaviour.IsBuildable) buildableTiles.Add(new Vector2(tile.rectangle.X, tile.rectangle.Y), tile);
+            }
+
+            foreach(RenderObject renderObject in activeObjects)
+            {
+                if (renderObject.objectBehaviour == null || renderObject.objectBehaviour.IsBuildable) continue;
+
+                buildableTiles.Remove(new Vector2(renderObject.rectangle.X, renderObject.rectangle.Y));
+            }
+
+            return buildableTiles.Values.ToArray();
         }
     }
 }

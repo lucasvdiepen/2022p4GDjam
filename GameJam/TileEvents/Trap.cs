@@ -18,7 +18,7 @@ namespace GameJam.TileEvents
         private Direction2D _direction2D;
         private int _direction;
 
-        public Trap(float moveTime) : base(false, moveTime)
+        public Trap(float moveTime) : base(false, false, moveTime)
         {
             Random rnd = new Random();
             _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
@@ -72,7 +72,11 @@ namespace GameJam.TileEvents
 
         public Vector2 GetSuitableLocation(Room room, int tileSize)
         {
-            throw new NotImplementedException();
+            Tile[] buildableTiles = room.GetBuildableTiles();
+
+            return new Vector2(16, 16);
+
+            //throw new NotImplementedException();
         }
 
         public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetPlayerFrames();

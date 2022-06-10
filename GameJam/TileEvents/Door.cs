@@ -9,7 +9,7 @@ namespace GameJam.TileEvents
 {
     public class Door : TileBehaviour
     {
-        public Door() : base(true)
+        public Door() : base(true, false)
         {
 
         }
