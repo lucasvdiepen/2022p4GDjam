@@ -9,21 +9,19 @@ namespace GameJam.TileEvents
 {
     public class TileBehaviour : ObjectBehaviour
     {
-        private bool isMoveBlocked;
-
         public TileBehaviour()
         {
 
         }
 
-        public TileBehaviour(bool isMoveBlocked)
+        public TileBehaviour(bool isMoveBlocked) : base(isMoveBlocked)
         {
-            this.isMoveBlocked = isMoveBlocked;
+
         }
 
         public virtual CanEnterEvent CanEnter(MoveEvent moveEvent)
         {
-            return new CanEnterEvent() { BlockMovement = isMoveBlocked, BlockEvents = true };
+            return new CanEnterEvent() { BlockMovement = IsMoveBlocked, BlockEvents = IsMoveBlocked };
         }
 
         public virtual void OnExit(MoveEvent moveEvent)
