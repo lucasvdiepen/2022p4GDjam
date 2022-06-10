@@ -80,8 +80,6 @@ namespace GameJam.TileEvents
             var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
 
             return new Vector2(rect.X, rect.Y);
-
-            //throw new NotImplementedException();
         }
 
         public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetPlayerFrames();

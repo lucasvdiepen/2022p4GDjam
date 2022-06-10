@@ -12,7 +12,8 @@ namespace GameJam.Game
     public static class TrapGenerator
     {
         private static readonly Func<ObjectBehaviour>[] traps = {
-            () => { return new Trap(2); }
+            () => { return new Trap(2); },
+            () => { return new Turret(2); }
         };
 
         private const int trapsPerRoom = 5;

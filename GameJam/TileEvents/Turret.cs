@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GameJam.TileEvents
 {
-    public class Turret : TimerBehaviour
+    public class Turret : TimerBehaviour, ITrap
     {
         // todo: moet bepaald worden door trap generator
         Vector2 _direction = new Vector2(1, 0);
@@ -43,6 +43,20 @@ namespace GameJam.TileEvents
 
             //Deal damage to player
             if (CollisionUtility.HasCollision(newBullet.rectangle, gameContext.player.rectangle)) gameContext.playerHealth.RemoveHealth(1);
+        }
+
+        public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetPlayerFrames();
+
+        public Vector2 GetSuitableLocation(Room room, int tileSize)
+        {
+            Tile[] buildableTiles = room.GetBuildableTiles();
+
+            if (buildableTiles.Length == 0) return null;
+
+            Random rnd = new Random();
+            var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
+
+            return new Vector2(rect.X, rect.Y);
         }
     }
 }
