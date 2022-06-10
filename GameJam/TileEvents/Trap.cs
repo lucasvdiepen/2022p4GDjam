@@ -82,6 +82,6 @@ namespace GameJam.TileEvents
             return new Vector2(rect.X, rect.Y);
         }
 
-        public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetPlayerFrames();
+        public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetSawFrames();
     }
 }

@@ -34,9 +34,10 @@ namespace GameJam.TileEvents
 
             var newBullet = new RenderObject()
             {
-                frames = gameContext.spriteMap.GetPlayerFrames(),
+                frames = gameContext.spriteMap.GetBulletFrames(_direction),
                 rectangle = new Rectangle(spawnPosition.x, spawnPosition.y, gameContext.tileSize, gameContext.tileSize),
-                objectBehaviour = new Bullet(_direction, 0.5f)
+                objectBehaviour = new Bullet(_direction, 0.5f),
+                animationSpeed = 3f
             };
 
             gameContext.room.activeObjects.Add(newBullet);
@@ -45,7 +46,7 @@ namespace GameJam.TileEvents
             if (CollisionUtility.HasCollision(newBullet.rectangle, gameContext.player.rectangle)) gameContext.playerHealth.RemoveHealth(1);
         }
 
-        public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetPlayerFrames();
+        public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetTurretFrames(_direction);
 
         public Vector2 GetSuitableLocation(Room room, int tileSize)
         {

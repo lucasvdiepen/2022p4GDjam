@@ -12,9 +12,9 @@ namespace GameJam.Game
         private readonly Dictionary<char, Func<TileBehaviour>> tileObjects = new Dictionary<char, Func<TileBehaviour>>();
 
         private readonly Dictionary<HeartState, Rectangle> heart = new Dictionary<HeartState, Rectangle>();
-        private readonly Dictionary<Vector2, Rectangle> wallSpikes = new Dictionary<Vector2, Rectangle>();
-        private readonly Dictionary<Vector2, Rectangle> turret = new Dictionary<Vector2, Rectangle>();
-        private readonly Dictionary<Vector2, Rectangle[]> bullet = new Dictionary<Vector2, Rectangle[]>();
+        private readonly Dictionary<Vector2, Rectangle> wallSpikes = new Dictionary<Vector2, Rectangle>(new Vector2Comparer());
+        private readonly Dictionary<Vector2, Rectangle> turret = new Dictionary<Vector2, Rectangle>(new Vector2Comparer());
+        private readonly Dictionary<Vector2, Rectangle[]> bullet = new Dictionary<Vector2, Rectangle[]>(new Vector2Comparer());
 
         private readonly Rectangle[] playerAnimation;
         private readonly Rectangle[] sawAnimation;
@@ -145,19 +145,19 @@ namespace GameJam.Game
             return bullet[direction];
         }
 
-        internal Rectangle GetTurretSprite(Vector2 direction)
+        internal Rectangle[] GetTurretFrames(Vector2 direction)
         {
-            return turret[direction];
+            return new Rectangle[] { turret[direction] };
         }
 
-        internal Rectangle GetWallSpikeSprite(Vector2 direction)
+        internal Rectangle[] GetWallSpikeFrames(Vector2 direction)
         {
-            return wallSpikes[direction];
+            return new Rectangle[] { wallSpikes[direction] };
         }
 
-        internal Rectangle GetHeartSprite(HeartState heartState)
+        internal Rectangle[] GetHeartFrames(HeartState heartState)
         {
-            return heart[heartState];
+            return new Rectangle[] { heart[heartState] };
         }
     }
 }
