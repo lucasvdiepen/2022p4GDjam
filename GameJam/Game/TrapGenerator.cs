@@ -11,11 +11,6 @@ namespace GameJam.Game
 {
     public static class TrapGenerator
     {
-        /*private readonly Dictionary<TrapType, Func<float, ObjectBehaviour>> traps = new Dictionary<TrapType, Func<float, ObjectBehaviour>>()
-        {
-            {TrapType.Trap, (time) => { return new Trap(time); } }
-        };*/
-
         private static readonly Func<ObjectBehaviour>[] traps = {
             () => { return new Trap(2); }
         };
