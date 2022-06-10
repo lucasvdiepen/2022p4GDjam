@@ -63,6 +63,10 @@ namespace GameJam.Game
             turret.Add(new Vector2(0, 1), new Rectangle(86, 180, 16, 16));
             turret.Add(new Vector2(-1, 0), new Rectangle(107, 180, 16, 16));
 
+            //Heart sprites full heart (H) empthy heart (h);
+            heart.Add('H', new Rectangle(2, 180, 16, 16));
+            heart.Add('h', new Rectangle(23, 180, 16, 16));
+
             //Bullet Animation Dictinary;
             bullet.Add(new Vector2(0, -1), new Rectangle[] 
             {   
