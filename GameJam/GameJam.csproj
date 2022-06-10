@@ -85,6 +85,7 @@
     <Compile Include="Events\MoveEvent.cs" />
     <Compile Include="Game\TrapGenerator.cs" />
     <Compile Include="TileEvents\Door.cs" />
+    <Compile Include="TileEvents\ITrap.cs" />
     <Compile Include="TileEvents\ObjectBehaviour.cs" />
     <Compile Include="Game\SpriteMap.cs" />
     <Compile Include="Game\Vector2.cs" />

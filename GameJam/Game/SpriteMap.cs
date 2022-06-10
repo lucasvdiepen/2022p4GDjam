@@ -5,7 +5,7 @@ using GameJam.TileEvents;
 
 namespace GameJam.Game
 {
-    internal class SpriteMap
+    public class SpriteMap
     {
         private readonly Dictionary<char, Rectangle> tileMap = new Dictionary<char, Rectangle>();
         private readonly Dictionary<char, Func<TileBehaviour>> tileObjects = new Dictionary<char, Func<TileBehaviour>>();

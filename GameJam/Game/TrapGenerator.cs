@@ -9,35 +9,36 @@ using System.Threading.Tasks;
 
 namespace GameJam.Game
 {
-    public class TrapGenerator
+    public static class TrapGenerator
     {
         /*private readonly Dictionary<TrapType, Func<float, ObjectBehaviour>> traps = new Dictionary<TrapType, Func<float, ObjectBehaviour>>()
         {
             {TrapType.Trap, (time) => { return new Trap(time); } }
         };*/
 
-        private Func<ObjectBehaviour>[] traps = {
+        private static readonly Func<ObjectBehaviour>[] traps = {
             () => { return new Trap(2); }
         };
 
         private const int trapsPerRoom = 5;
 
-        public void GenerateTraps(Room room, GameContext gameContext)
+        public static void GenerateTraps(Room room, SpriteMap spriteMap, int tileSize)
         {
             Random rnd = new Random();
-            var l = traps.Length;
-            for(int i = 0; i < l; i++)
+            for(int i = 0; i < trapsPerRoom; i++)
             {
-                var newTrap = traps[i]();
-                ITrap newTrapInterface = (ITrap)newTrap;
-                Vector2 suitableLocation = newTrapInterface.GetSuitableLocation(room);
+                var newTrap = traps[rnd.Next(0, traps.Length)]();
+                var newTrapInterface = (ITrap)newTrap;
+                Vector2 suitableLocation = newTrapInterface.GetSuitableLocation(room, tileSize);
 
                 var newRenderObject = new RenderObject()
                 {
-                    frames = newTrapInterface.GetFrames(gameContext),
-                    rectangle = new Rectangle(2 * gameContext.tileSize, 2 * gameContext.tileSize, gameContext.tileSize, gameContext.tileSize),
+                    frames = newTrapInterface.GetFrames(spriteMap),
+                    rectangle = new Rectangle((int)suitableLocation.x, (int)suitableLocation.y, tileSize, tileSize),
                     objectBehaviour = newTrap
                 };
+
+                room.activeObjects.Add(newRenderObject);
             }
         }
     }

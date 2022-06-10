@@ -10,7 +10,7 @@ namespace GameJam.TileEvents
 {
     public interface ITrap
     {
-        Vector2 GetSuitableLocation(Room room);
-        Rectangle[] GetFrames(GameContext gameContext);
+        Vector2 GetSuitableLocation(Room room, int tileSize);
+        Rectangle[] GetFrames(SpriteMap spriteMap);
     }
 }
