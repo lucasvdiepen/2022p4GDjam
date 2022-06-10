@@ -32,5 +32,10 @@ namespace GameJam.Game
 
             return allTiles.ToArray();
         }
+
+        public Tile[] GetBuildableTiles()
+        {
+
+        }
     }
 }
