@@ -9,6 +9,12 @@ namespace GameJam.Game
     {
         private readonly Dictionary<char, Rectangle> tileMap = new Dictionary<char, Rectangle>();
         private readonly Dictionary<char, Func<TileBehaviour>> tileObjects = new Dictionary<char, Func<TileBehaviour>>();
+        private readonly Dictionary<char, Rectangle> heart = new Dictionary<char, Rectangle>();
+
+        private readonly Dictionary<Vector2, Rectangle> wallSpikes = new Dictionary<Vector2, Rectangle>();
+        private readonly Dictionary<Vector2, Rectangle> turret = new Dictionary<Vector2, Rectangle>();
+        private readonly Dictionary<Vector2, Rectangle[]> bullet = new Dictionary<Vector2, Rectangle[]>();
+
         private readonly Rectangle[] playerAnimation;
         private readonly Rectangle[] sawAnimation;
 
@@ -44,6 +50,51 @@ namespace GameJam.Game
             tileObjects.Add('1', () => { return new TileBehaviour(true); });
             tileObjects.Add('2', () => { return new TileBehaviour(true); });
             tileObjects.Add('3', () => { return new TileBehaviour(true); });
+
+            //Wall Spike sprites for GameObject;
+            wallSpikes.Add(new Vector2(0, -1), new Rectangle(86, 138, 16, 16));
+            wallSpikes.Add(new Vector2(0, 1), new Rectangle(86, 159, 16, 16));
+            wallSpikes.Add(new Vector2(-1, 0), new Rectangle(107, 138, 16, 16));
+            wallSpikes.Add(new Vector2(1, 0), new Rectangle(107, 159, 16, 16));
+
+            //Turret sprite for Gameobject;
+            turret.Add(new Vector2(0, -1), new Rectangle(44, 180, 16, 16));
+            turret.Add(new Vector2(1, 0), new Rectangle(65, 180, 16, 16));
+            turret.Add(new Vector2(0, 1), new Rectangle(86, 180, 16, 16));
+            turret.Add(new Vector2(-1, 0), new Rectangle(107, 180, 16, 16));
+
+            //Bullet Animation Dictinary;
+            bullet.Add(new Vector2(0, -1), new Rectangle[] 
+            {   
+                new Rectangle(128, 180, 16, 16),
+                new Rectangle(128, 201, 16, 16),
+                new Rectangle(128, 222, 16, 16),
+                new Rectangle(128, 243, 16, 16)
+            });
+
+            bullet.Add(new Vector2(1, 0), new Rectangle[] 
+            {
+                new Rectangle(149, 180, 16, 16),
+                new Rectangle(149, 201, 16, 16),
+                new Rectangle(149, 222, 16, 16),
+                new Rectangle(149, 243, 16, 16)
+            });
+
+            bullet.Add(new Vector2(0, 1), new Rectangle[] 
+            {
+                new Rectangle(170, 180, 16, 16),
+                new Rectangle(170, 201, 16, 16),
+                new Rectangle(170, 222, 16, 16),
+                new Rectangle(170, 243, 16, 16)
+            });
+
+            bullet.Add(new Vector2(-1, 0), new Rectangle[] 
+            {
+                new Rectangle(170, 180, 16, 16),
+                new Rectangle(170, 201, 16, 16),
+                new Rectangle(170, 222, 16, 16),
+                new Rectangle(170, 243, 16, 16)
+            });
 
             playerAnimation = new Rectangle[]
             {
@@ -83,8 +134,12 @@ namespace GameJam.Game
         {
             return sawAnimation;
         }
-    }
 
+        internal Rectangle[] GetBulletFrames(Vector2 direction)
+        {
+            return bullet[direction];
+        }
+    }
 }
 
 
