@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using WindowsFormsApp1.Game;
 
 namespace GameJam.Game
 {
@@ -10,12 +12,17 @@ namespace GameJam.Game
         private readonly GameContext context;
         private float frametime;
         private readonly Image image;
+        private readonly Font font;
+       
+        Health hp = new Health(3);
 
         public GameRenderer(GameContext context)
         {
             this.context = context;
 
             image = Bitmap.FromFile("sprites.png");
+
+            font = new Font(FontFamily.GenericMonospace, 10);
 
         }
         private Graphics InitGraphics(PaintEventArgs e)
@@ -39,6 +46,10 @@ namespace GameJam.Game
             Graphics g = InitGraphics(e);
             RenderRoom(g);
             RenderObject(g, context.player);
+
+            List<RenderObject> activeObjects = context.room.activeObjects;
+
+            g.DrawString(hp.GiveHealth().ToString(), font, Brushes.Black, 1,1);
         }
 
         private void RenderRoom(Graphics g)

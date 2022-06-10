@@ -11,7 +11,7 @@ namespace WindowsFormsApp1.Game
         private int _startHp;
         public int CurrentHp { get; private set; }
 
-        public Health(int startHp)
+        internal Health(int startHp)
         {
             _startHp = startHp;
             CurrentHp = _startHp;
@@ -29,6 +29,11 @@ namespace WindowsFormsApp1.Game
         public void RemoveHealth(int health)
         {
             CurrentHp -= health;
+        }
+
+        internal int GiveHealth()
+        {
+            return CurrentHp;
         }
     }
 }
