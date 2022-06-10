@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GameJam.TileEvents
 {
-    public class Trap : TimerBehaviour
+    public class Trap : TimerBehaviour, ITrap
     {
         private Direction2D _direction2D;
         private int _direction;
@@ -77,6 +77,11 @@ namespace GameJam.TileEvents
         {
             _direction *= -1;
             Move(gameContext, renderObject);
+        }
+
+        public void FindSuitableLocation()
+        {
+            throw new NotImplementedException();
         }
     }
 }
