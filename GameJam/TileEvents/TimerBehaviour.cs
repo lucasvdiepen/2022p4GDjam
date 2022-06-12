@@ -23,7 +23,7 @@ namespace GameJam.TileEvents
 
             if (_timeElapsed >= _time)
             {
-                _timeElapsed = 0;
+                _timeElapsed -= _time;
                 TimerTick(updateEvent);
             }
         }

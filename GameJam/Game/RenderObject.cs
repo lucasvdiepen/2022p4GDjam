@@ -7,18 +7,28 @@ namespace GameJam.Game
     public class RenderObject
     {
         internal RectangleF rectangle;
-        internal float frame;
-        internal float animationSpeed = 10;
+        internal int frame;
+        internal float animationTime = 1;
         internal ObjectBehaviour objectBehaviour;
 
         internal Rectangle[] frames;
 
+        private float timeElapsed;
+
         internal void MoveFrame(float frametime)
         {
-            frame += frametime * animationSpeed;
-            if (frame >= frames.Length)
+            if (frames.Length <= 1) return;
+
+            timeElapsed += frametime;
+
+            if (timeElapsed >= animationTime)
             {
-                frame = 0;
+                frame += (int)Math.Floor(timeElapsed / animationTime);
+                timeElapsed = timeElapsed % animationTime;
+                if (frame >= frames.Length)
+                {
+                    frame %= frames.Length;
+                }
             }
         }
     }

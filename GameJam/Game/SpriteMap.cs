@@ -73,32 +73,28 @@ namespace GameJam.Game
             {   
                 new Rectangle(128, 180, 16, 16),
                 new Rectangle(128, 201, 16, 16),
-                new Rectangle(128, 222, 16, 16),
-                new Rectangle(128, 243, 16, 16)
+                new Rectangle(128, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(1, 0), new Rectangle[] 
             {
                 new Rectangle(149, 180, 16, 16),
                 new Rectangle(149, 201, 16, 16),
-                new Rectangle(149, 222, 16, 16),
-                new Rectangle(149, 243, 16, 16)
+                new Rectangle(149, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(0, 1), new Rectangle[] 
             {
                 new Rectangle(170, 180, 16, 16),
                 new Rectangle(170, 201, 16, 16),
-                new Rectangle(170, 222, 16, 16),
-                new Rectangle(170, 243, 16, 16)
+                new Rectangle(170, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(-1, 0), new Rectangle[] 
             {
                 new Rectangle(170, 180, 16, 16),
                 new Rectangle(170, 201, 16, 16),
-                new Rectangle(170, 222, 16, 16),
-                new Rectangle(170, 243, 16, 16)
+                new Rectangle(170, 222, 16, 16)
             });
 
             playerAnimation = new Rectangle[]

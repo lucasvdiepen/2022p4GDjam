@@ -13,7 +13,7 @@ namespace GameJam.Game
     {
         private static readonly Func<ObjectBehaviour>[] traps = {
             () => { return new Trap(2); },
-            () => { return new Turret(2); }
+            () => { return new Turret(2, 0.5f); }
         };
 
         private const int trapsPerRoom = 5;
@@ -31,7 +31,8 @@ namespace GameJam.Game
                 {
                     frames = newTrapInterface.GetFrames(spriteMap),
                     rectangle = new Rectangle(suitableLocation.x, suitableLocation.y, tileSize, tileSize),
-                    objectBehaviour = newTrap
+                    objectBehaviour = newTrap,
+                    animationTime = 0.1f
                 };
 
                 room.activeObjects.Add(newRenderObject);

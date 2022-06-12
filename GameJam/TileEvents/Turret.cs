@@ -14,11 +14,14 @@ namespace GameJam.TileEvents
     public class Turret : TimerBehaviour, ITrap
     {
         // todo: moet bepaald worden door trap generator
-        Vector2 _direction = new Vector2(1, 0);
+        private Vector2 _direction = new Vector2(1, 0);
+        private float _shootDelay;
+        private float _bulletSpeed;
 
-        public Turret(float shootDelay) : base(true, false, shootDelay)
+        public Turret(float shootDelay, float bulletSpeed) : base(true, false, shootDelay)
         {
-
+            _shootDelay = shootDelay;
+            _bulletSpeed = bulletSpeed;
         }
 
         public override void TimerTick(UpdateEvent updateEvent)
@@ -32,12 +35,14 @@ namespace GameJam.TileEvents
 
             if (gameContext.room.IsMoveBlocked(spawnPosition.x, spawnPosition.y)) return;
 
+            var bulletFrames = gameContext.spriteMap.GetBulletFrames(_direction);
+
             var newBullet = new RenderObject()
             {
-                frames = gameContext.spriteMap.GetBulletFrames(_direction),
+                frames = bulletFrames,
                 rectangle = new Rectangle(spawnPosition.x, spawnPosition.y, gameContext.tileSize, gameContext.tileSize),
-                objectBehaviour = new Bullet(_direction, 0.5f),
-                animationSpeed = 3f
+                objectBehaviour = new Bullet(_direction, _bulletSpeed),
+                animationTime = _bulletSpeed / bulletFrames.Length
             };
 
             gameContext.room.activeObjects.Add(newBullet);
