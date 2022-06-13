@@ -94,7 +94,7 @@
     <Compile Include="Game\Vector2.cs" />
     <Compile Include="TileEvents\TileBehaviour.cs" />
     <Compile Include="TileEvents\TimerBehaviour.cs" />
-    <Compile Include="TileEvents\Trap.cs" />
+    <Compile Include="TileEvents\Saw.cs" />
     <Compile Include="TileEvents\Turret.cs" />
     <Compile Include="Tools\FileLevelDataSource.cs" />
     <Compile Include="Game\GameContext.cs" />

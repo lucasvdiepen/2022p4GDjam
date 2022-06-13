@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace GameJam.TileEvents
 {
-    public class Trap : TimerBehaviour, ITrap
+    public class Saw : TimerBehaviour, ITrap
     {
         // todo: moet bepaald worden door trap generator
         private Direction2D _direction2D;
         private int _direction;
 
-        public Trap(float moveTime) : base(false, false, moveTime)
+        public Saw(float moveTime) : base(false, false, moveTime)
         {
             Random rnd = new Random();
             _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
