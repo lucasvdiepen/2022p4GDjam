@@ -61,7 +61,33 @@ namespace GameJam.TileEvents
 
             var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
 
-            return new Vector2(rect.X, rect.Y);
+            var newLocation = new Vector2(rect.X, rect.Y);
+
+            // todo: check what direction the turret should aim at
+            FreeSpaceCount(room, newLocation, new Vector2(-1, 0) * tileSize);
+            FreeSpaceCount(room, newLocation, new Vector2(1, 0) * tileSize);
+            FreeSpaceCount(room, newLocation, new Vector2(0, -1) * tileSize);
+            FreeSpaceCount(room, newLocation, new Vector2(0, 1) * tileSize);
+
+            return newLocation;
+        }
+
+        private int FreeSpaceCount(Room room, Vector2 startPosition, Vector2 direction)
+        {
+            int c = 0;
+            Vector2 newPosition = startPosition;
+            while(true)
+            {
+                newPosition += direction;
+                Tile tile = room.GetTile(newPosition.x, newPosition.y);
+                if (tile == null) break;
+
+                if (tile.tileBehaviour != null && tile.tileBehaviour.IsMoveBlocked) break;
+
+                c++;
+            }
+
+            return c;
         }
     }
 }

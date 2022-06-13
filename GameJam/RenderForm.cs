@@ -17,7 +17,7 @@ namespace GameJam
         private LevelLoader levelLoader;
         private float frametime;
         private GameRenderer renderer;
-        private Audio audio;
+        //private Audio audio;
         private readonly GameContext gc = new GameContext();
         private Tile _previousTile;
 
@@ -37,7 +37,7 @@ namespace GameJam
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             renderer.Dispose();
-            audio.Dispose();
+            //audio.Dispose();
         }
         private void RenderForm_Load(object sender, EventArgs e)
         {
