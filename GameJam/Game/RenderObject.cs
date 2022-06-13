@@ -24,7 +24,7 @@ namespace GameJam.Game
             if (timeElapsed >= animationTime)
             {
                 frame += (int)Math.Floor(timeElapsed / animationTime);
-                timeElapsed = timeElapsed % animationTime;
+                timeElapsed %= animationTime;
                 if (frame >= frames.Length)
                 {
                     frame %= frames.Length;
