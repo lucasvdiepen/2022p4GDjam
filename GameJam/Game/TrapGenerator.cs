@@ -25,7 +25,7 @@ namespace GameJam.Game
             {
                 var newTrap = traps[rnd.Next(0, traps.Length)]();
                 var newTrapInterface = (ITrap)newTrap;
-                Vector2 suitableLocation = newTrapInterface.GetSuitableLocation(room, tileSize);
+                Vector2 suitableLocation = newTrapInterface.GetSuitableLocation(room, tileSize, rnd);
 
                 var newRenderObject = new RenderObject()
                 {

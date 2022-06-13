@@ -70,13 +70,12 @@ namespace GameJam.TileEvents
             Move(gameContext, renderObject);
         }
 
-        public Vector2 GetSuitableLocation(Room room, int tileSize)
+        public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
         {
             Tile[] buildableTiles = room.GetBuildableTiles();
 
             if (buildableTiles.Length == 0) return null;
 
-            Random rnd = new Random();
             var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
 
             return new Vector2(rect.X, rect.Y);
