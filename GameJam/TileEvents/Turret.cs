@@ -15,12 +15,10 @@ namespace GameJam.TileEvents
     {
         // todo: moet bepaald worden door trap generator
         private Vector2 _direction = new Vector2(1, 0);
-        private float _shootDelay;
         private float _bulletSpeed;
 
         public Turret(float shootDelay, float bulletSpeed) : base(true, false, shootDelay)
         {
-            _shootDelay = shootDelay;
             _bulletSpeed = bulletSpeed;
         }
 
@@ -64,10 +62,23 @@ namespace GameJam.TileEvents
             var newLocation = new Vector2(rect.X, rect.Y);
 
             // todo: check what direction the turret should aim at
-            FreeSpaceCount(room, newLocation, new Vector2(-1, 0) * tileSize);
-            FreeSpaceCount(room, newLocation, new Vector2(1, 0) * tileSize);
-            FreeSpaceCount(room, newLocation, new Vector2(0, -1) * tileSize);
-            FreeSpaceCount(room, newLocation, new Vector2(0, 1) * tileSize);
+            Vector2[] directions = new Vector2[]
+            {
+                new Vector2(-1, 0),
+                new Vector2(1, 0),
+                new Vector2(0, 1),
+                new Vector2(0, -1)
+            };
+
+            int[] freespace = new int[directions.Length];
+
+            var l = directions.Length;
+            for(int i = 0; i < l; i++)
+            {
+                freespace[i] = FreeSpaceCount(room, newLocation, directions[i]);
+            }
+
+            _direction = directions[Array.IndexOf(freespace, freespace.Max())];
 
             return newLocation;
         }

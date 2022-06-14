@@ -92,9 +92,9 @@ namespace GameJam.Game
 
             bullet.Add(new Vector2(-1, 0), new Rectangle[] 
             {
-                new Rectangle(170, 180, 16, 16),
-                new Rectangle(170, 201, 16, 16),
-                new Rectangle(170, 222, 16, 16)
+                new Rectangle(191, 180, 16, 16),
+                new Rectangle(191, 201, 16, 16),
+                new Rectangle(191, 222, 16, 16)
             });
 
             playerAnimation = new Rectangle[]
