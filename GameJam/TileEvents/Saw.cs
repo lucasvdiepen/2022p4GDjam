@@ -19,10 +19,8 @@ namespace GameJam.TileEvents
         private int _direction;
 
         public Saw(float moveTime) : base(false, false, moveTime)
-        {
-            Random rnd = new Random();
-            _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
-            _direction2D = (Direction2D)rnd.Next(0, Enum.GetValues(typeof(Direction2D)).Length);
+        {   
+
         }
 
         public override void OnEnter(MoveEvent moveEvent)
@@ -77,6 +75,9 @@ namespace GameJam.TileEvents
             if (buildableTiles.Length == 0) return null;
 
             var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
+
+            _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
+            _direction2D = (Direction2D)rnd.Next(0, Enum.GetValues(typeof(Direction2D)).Length);
 
             return new Vector2(rect.X, rect.Y);
         }

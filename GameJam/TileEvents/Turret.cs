@@ -13,7 +13,6 @@ namespace GameJam.TileEvents
 {
     public class Turret : TimerBehaviour, ITrap
     {
-        // todo: moet bepaald worden door trap generator
         private Vector2 _direction = new Vector2(1, 0);
         private float _bulletSpeed;
 
