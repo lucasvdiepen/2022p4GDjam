@@ -47,10 +47,13 @@ namespace GameJam.Game
             tileObjects.Add('W', () => { return new Door(); });
             tileObjects.Add('E', () => { return new Door(); });
             tileObjects.Add('S', () => { return new Door(); });
-            //tileObjects.Add('#', () => { return new TileBehaviour(true); });
+
             tileObjects.Add('1', () => { return new TileBehaviour(true); });
             tileObjects.Add('2', () => { return new TileBehaviour(true); });
             tileObjects.Add('3', () => { return new TileBehaviour(true); });
+
+            tileObjects.Add('!', () => { return new Stair(-1); });
+            tileObjects.Add('?', () => { return new Stair(1); });
 
             //Wall Spike sprites for GameObject;
             wallSpikes.Add(new Vector2(0, -1), new Rectangle(86, 138, 16, 16));
