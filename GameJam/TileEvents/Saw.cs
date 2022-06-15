@@ -5,23 +5,22 @@ using GameJam.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GameJam.TileEvents
 {
-    public class Trap : TimerBehaviour
+    public class Saw : TimerBehaviour, ITrap
     {
         // todo: moet bepaald worden door trap generator
         private Direction2D _direction2D;
         private int _direction;
 
-        public Trap(float moveTime) : base(false, moveTime)
-        {
-            Random rnd = new Random();
-            _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
-            _direction2D = (Direction2D)rnd.Next(0, Enum.GetValues(typeof(Direction2D)).Length);
+        public Saw(float moveTime) : base(false, false, moveTime)
+        {   
+
         }
 
         public override void OnEnter(MoveEvent moveEvent)
@@ -68,5 +67,17 @@ namespace GameJam.TileEvents
             _direction *= -1;
             Move(gameContext, renderObject);
         }
+
+        public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
+        {
+            var newLocation = room.GetRandomBuildableTile(rnd);
+
+            _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
+            _direction2D = (Direction2D)rnd.Next(0, Enum.GetValues(typeof(Direction2D)).Length);
+
+            return newLocation;
+        }
+
+        public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetSawFrames();
     }
 }

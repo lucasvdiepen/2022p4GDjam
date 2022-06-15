@@ -6,15 +6,15 @@ using GameJam.TileEvents;
 
 namespace GameJam.Game
 {
-    internal class SpriteMap
+    public class SpriteMap
     {
         private readonly Dictionary<char, Rectangle> tileMap = new Dictionary<char, Rectangle>();
         private readonly Dictionary<char, Func<TileBehaviour>> tileObjects = new Dictionary<char, Func<TileBehaviour>>();
 
         private readonly Dictionary<HeartState, Rectangle> heart = new Dictionary<HeartState, Rectangle>();
-        private readonly Dictionary<Vector2, Rectangle> wallSpikes = new Dictionary<Vector2, Rectangle>();
-        private readonly Dictionary<Vector2, Rectangle> turret = new Dictionary<Vector2, Rectangle>();
-        private readonly Dictionary<Vector2, Rectangle[]> bullet = new Dictionary<Vector2, Rectangle[]>();
+        private readonly Dictionary<Vector2, Rectangle> wallSpikes = new Dictionary<Vector2, Rectangle>(new Vector2Comparer());
+        private readonly Dictionary<Vector2, Rectangle> turret = new Dictionary<Vector2, Rectangle>(new Vector2Comparer());
+        private readonly Dictionary<Vector2, Rectangle[]> bullet = new Dictionary<Vector2, Rectangle[]>(new Vector2Comparer());
 
         private readonly Rectangle[] playerAnimation;
         private readonly Rectangle[] sawAnimation;
@@ -48,9 +48,9 @@ namespace GameJam.Game
             tileObjects.Add('E', () => { return new Door(); });
             tileObjects.Add('S', () => { return new Door(); });
             //tileObjects.Add('#', () => { return new TileBehaviour(true); });
-            tileObjects.Add('1', () => { return new TileBehaviour(true); });
-            tileObjects.Add('2', () => { return new TileBehaviour(true); });
-            tileObjects.Add('3', () => { return new TileBehaviour(true); });
+            tileObjects.Add('1', () => { return new TileBehaviour(true, false); });
+            tileObjects.Add('2', () => { return new TileBehaviour(true, false); });
+            tileObjects.Add('3', () => { return new TileBehaviour(true, false); });
 
             //Wall Spike sprites for GameObject;
             wallSpikes.Add(new Vector2(0, -1), new Rectangle(86, 138, 16, 16));
@@ -73,32 +73,28 @@ namespace GameJam.Game
             {   
                 new Rectangle(128, 180, 16, 16),
                 new Rectangle(128, 201, 16, 16),
-                new Rectangle(128, 222, 16, 16),
-                new Rectangle(128, 243, 16, 16)
+                new Rectangle(128, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(1, 0), new Rectangle[] 
             {
                 new Rectangle(149, 180, 16, 16),
                 new Rectangle(149, 201, 16, 16),
-                new Rectangle(149, 222, 16, 16),
-                new Rectangle(149, 243, 16, 16)
+                new Rectangle(149, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(0, 1), new Rectangle[] 
             {
                 new Rectangle(170, 180, 16, 16),
                 new Rectangle(170, 201, 16, 16),
-                new Rectangle(170, 222, 16, 16),
-                new Rectangle(170, 243, 16, 16)
+                new Rectangle(170, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(-1, 0), new Rectangle[] 
             {
-                new Rectangle(170, 180, 16, 16),
-                new Rectangle(170, 201, 16, 16),
-                new Rectangle(170, 222, 16, 16),
-                new Rectangle(170, 243, 16, 16)
+                new Rectangle(191, 180, 16, 16),
+                new Rectangle(191, 201, 16, 16),
+                new Rectangle(191, 222, 16, 16)
             });
 
             playerAnimation = new Rectangle[]
@@ -145,19 +141,19 @@ namespace GameJam.Game
             return bullet[direction];
         }
 
-        internal Rectangle GetTurretSprite(Vector2 direction)
+        internal Rectangle[] GetTurretFrames(Vector2 direction)
         {
-            return turret[direction];
+            return new Rectangle[] { turret[direction] };
         }
 
-        internal Rectangle GetWallSpikeSprite(Vector2 direction)
+        internal Rectangle[] GetWallSpikeFrames(Vector2 direction)
         {
-            return wallSpikes[direction];
+            return new Rectangle[] { wallSpikes[direction] };
         }
 
-        internal Rectangle GetHeartSprite(HeartState heartState)
+        internal Rectangle[] GetHeartFrames(HeartState heartState)
         {
-            return heart[heartState];
+            return new Rectangle[] { heart[heartState] };
         }
     }
 }

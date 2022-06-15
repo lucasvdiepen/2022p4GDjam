@@ -17,7 +17,7 @@ namespace GameJam
         private LevelLoader levelLoader;
         private float frametime;
         private GameRenderer renderer;
-        private Audio audio;
+        //private Audio audio;
         private readonly GameContext gc = new GameContext();
         private Tile _previousTile;
 
@@ -37,12 +37,12 @@ namespace GameJam
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             renderer.Dispose();
-            audio.Dispose();
+            //audio.Dispose();
         }
         private void RenderForm_Load(object sender, EventArgs e)
         {
             levelLoader = new LevelLoader(gc.tileSize, new FileLevelDataSource());
-            levelLoader.LoadRooms(gc.spriteMap.GetMap(), gc.spriteMap.GetTileObjects());
+            levelLoader.LoadRooms(gc.spriteMap);
 
             renderer = new GameRenderer(gc);
 
@@ -51,25 +51,9 @@ namespace GameJam
             gc.player = new RenderObject()
             {
                 frames = gc.spriteMap.GetPlayerFrames(),
-                rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize)
+                rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
+                animationTime = 0.1f
             };
-
-            RenderObject testTrap = new RenderObject()
-            {
-                frames = gc.spriteMap.GetSawFrames(),
-                rectangle = new Rectangle(7 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
-                objectBehaviour = new Trap(2)
-            };
-
-            RenderObject testTurret = new RenderObject()
-            {
-                frames = gc.spriteMap.GetPlayerFrames(),
-                rectangle = new Rectangle(2 * gc.tileSize, 1 * gc.tileSize, gc.tileSize, gc.tileSize),
-                objectBehaviour = new Turret(2)
-            };
-
-            gc.room.activeObjects.Add(testTrap);
-            gc.room.activeObjects.Add(testTurret);
 
             ClientSize =
              new Size(
