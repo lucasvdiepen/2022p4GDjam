@@ -88,6 +88,7 @@
     <Compile Include="TileEvents\ObjectBehaviour.cs" />
     <Compile Include="Game\SpriteMap.cs" />
     <Compile Include="Game\Vector2.cs" />
+    <Compile Include="TileEvents\Spike.cs" />
     <Compile Include="TileEvents\TileBehaviour.cs" />
     <Compile Include="TileEvents\TimerBehaviour.cs" />
     <Compile Include="TileEvents\Trap.cs" />

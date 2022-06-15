@@ -68,8 +68,16 @@ namespace GameJam
                 objectBehaviour = new Turret(2)
             };
 
+            RenderObject testSpike = new RenderObject()
+            {
+                frames = gc.spriteMap.GetPlayerFrames(),
+                rectangle = new Rectangle(9 * gc.tileSize, 1 * gc.tileSize, gc.tileSize, gc.tileSize),
+                objectBehaviour = new Spike()
+            };
+
             gc.room.activeObjects.Add(testTrap);
             gc.room.activeObjects.Add(testTurret);
+            gc.room.activeObjects.Add(testSpike);
 
             ClientSize =
              new Size(
