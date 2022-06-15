@@ -63,7 +63,7 @@ namespace GameJam.Game
 
         private void RenderObject(Graphics g, RenderObject renderObject)
         {
-            g.DrawImage(image, renderObject.rectangle, renderObject.frames[(int)renderObject.frame], GraphicsUnit.Pixel);
+            g.DrawImage(image, renderObject.rectangle, renderObject.frames[renderObject.frame], GraphicsUnit.Pixel);
             renderObject.MoveFrame(frametime);
         }
 

@@ -14,7 +14,7 @@ namespace GameJam.TileEvents
 
         }
 
-        public TileBehaviour(bool isMoveBlocked) : base(isMoveBlocked)
+        public TileBehaviour(bool isMoveBlocked, bool isBuildable) : base(isMoveBlocked, isBuildable)
         {
 
         }
