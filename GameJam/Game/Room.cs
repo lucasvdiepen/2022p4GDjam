@@ -104,5 +104,27 @@ namespace GameJam.Game
             var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
             return new Vector2(rect.X, rect.Y);
         }
+
+        public Tile[] GetMoveBlockingTiles()
+        {
+            List<Tile> blockingTiles = new List<Tile>();
+
+            Tile[] allTiles = GetAllTiles();
+
+            foreach(Tile tile in allTiles)
+            {
+                if (tile.tileBehaviour != null && tile.tileBehaviour.IsMoveBlocked) blockingTiles.Add(tile);
+            }
+
+            return blockingTiles.ToArray();
+        }
+
+        public Tile GetRandomMoveBlockingTile(Random rnd)
+        {
+            Tile[] moveBlockingTiles = GetMoveBlockingTiles();
+            if (moveBlockingTiles.Length == 0) return null;
+
+            return moveBlockingTiles[rnd.Next(0, moveBlockingTiles.Length)];
+        }
     }
 }

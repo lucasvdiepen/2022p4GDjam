@@ -55,15 +55,6 @@ namespace GameJam
                 animationTime = 0.1f
             };
 
-            RenderObject testSpike = new RenderObject()
-            {
-                frames = gc.spriteMap.GetWallSpikeFrames(new Vector2(0, 1)),
-                rectangle = new Rectangle(9 * gc.tileSize, 1 * gc.tileSize, gc.tileSize, gc.tileSize),
-                objectBehaviour = new Spike()
-            };
-
-            gc.room.activeObjects.Add(testSpike);
-
             ClientSize =
              new Size(
 
