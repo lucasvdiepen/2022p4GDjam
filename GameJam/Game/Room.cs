@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -93,6 +94,15 @@ namespace GameJam.Game
             }
 
             return buildableTiles.Values.ToArray();
+        }
+
+        public Vector2 GetRandomBuildableTile(Random rnd)
+        {
+            Tile[] buildableTiles = GetBuildableTiles();
+            if (buildableTiles.Length == 0) return null;
+
+            var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
+            return new Vector2(rect.X, rect.Y);
         }
     }
 }

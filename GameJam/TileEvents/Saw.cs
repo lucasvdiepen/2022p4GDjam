@@ -70,16 +70,12 @@ namespace GameJam.TileEvents
 
         public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
         {
-            Tile[] buildableTiles = room.GetBuildableTiles();
-
-            if (buildableTiles.Length == 0) return null;
-
-            var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
+            var newLocation = room.GetRandomBuildableTile(rnd);
 
             _direction = rnd.Next(0, 2) == 1 ? 1 : -1;
             _direction2D = (Direction2D)rnd.Next(0, Enum.GetValues(typeof(Direction2D)).Length);
 
-            return new Vector2(rect.X, rect.Y);
+            return newLocation;
         }
 
         public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetSawFrames();

@@ -52,15 +52,8 @@ namespace GameJam.TileEvents
 
         public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
         {
-            Tile[] buildableTiles = room.GetBuildableTiles();
+            var newLocation = room.GetRandomBuildableTile(rnd);
 
-            if (buildableTiles.Length == 0) return null;
-
-            var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
-
-            var newLocation = new Vector2(rect.X, rect.Y);
-
-            // todo: check what direction the turret should aim at
             Vector2[] directions = new Vector2[]
             {
                 new Vector2(-1, 0),
