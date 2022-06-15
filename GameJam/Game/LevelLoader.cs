@@ -12,13 +12,14 @@ namespace GameJam.Game
         private readonly ILevelDataSource levelDataSource;
         private readonly int size;
         private readonly Dictionary<string, Room> rooms = new Dictionary<string, Room>();
+
         public LevelLoader(int size, ILevelDataSource levelDataSource)
         {
             this.levelDataSource = levelDataSource;
             this.size = size;
         }
 
-        public void LoadRooms(Dictionary<char, Rectangle> tileMap, Dictionary<char, Func<TileBehaviour>> tileObject)
+        public void LoadRooms(SpriteMap spriteMap)
         {
             string dir = Path.Combine(PathHelper.ExeDir(), "leveldata");
             foreach (FileInfo file in new DirectoryInfo(dir).GetFiles())
@@ -27,7 +28,7 @@ namespace GameJam.Game
                 int x = int.Parse(split[1]);
                 int y = int.Parse(split[2]);
                 int z = int.Parse(split[3]);
-                Room r = Load(x,y,z, tileMap, tileObject);
+                Room r = Load(x,y,z, spriteMap);
                 rooms.Add($"{x}-{y}-{z}",r);
             }
         }
@@ -36,8 +37,11 @@ namespace GameJam.Game
         {
             return rooms[$"{roomX}-{roomY}-{roomZ}"];
         }
-        private Room Load(int roomX, int roomY, int roomZ, Dictionary<char, Rectangle> tileMap, Dictionary<char, Func<TileBehaviour>> roomObjects)
+        private Room Load(int roomX, int roomY, int roomZ, SpriteMap spriteMap)
         {
+            var tileMap = spriteMap.GetMap();
+            var roomObjects = spriteMap.GetTileObjects();
+
             Room room = new Room()
             {
                 roomx = roomX,
@@ -65,6 +69,9 @@ namespace GameJam.Game
 
                 }
             }
+
+            TrapGenerator.GenerateTraps(room, spriteMap, size);
+
             return room;
         }
     }

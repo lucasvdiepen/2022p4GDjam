@@ -12,7 +12,7 @@ namespace GameJam.TileEvents
         private float _timeElapsed;
         private float _time;
 
-        public TimerBehaviour(bool isMoveBlocked, float time) : base(isMoveBlocked)
+        public TimerBehaviour(bool isMoveBlocked, bool isBuildable, float time) : base(isMoveBlocked, isBuildable)
         {
             _time = time;
         }
@@ -23,7 +23,7 @@ namespace GameJam.TileEvents
 
             if (_timeElapsed >= _time)
             {
-                _timeElapsed = 0;
+                _timeElapsed -= _time;
                 TimerTick(updateEvent);
             }
         }
