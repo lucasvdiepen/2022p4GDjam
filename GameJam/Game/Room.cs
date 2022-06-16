@@ -143,7 +143,7 @@ namespace GameJam.Game
             return new Vector2(rect.X, rect.Y);
         }
 
-        public Tile[] GetMoveBlockingTiles()
+        public List<Tile> GetMoveBlockingTiles()
         {
             List<Tile> blockingTiles = new List<Tile>();
 
@@ -154,15 +154,15 @@ namespace GameJam.Game
                 if (tile.tileBehaviour != null && tile.tileBehaviour.IsMoveBlocked) blockingTiles.Add(tile);
             }
 
-            return blockingTiles.ToArray();
+            return blockingTiles;
         }
 
         public Tile GetRandomMoveBlockingTile(Random rnd)
         {
-            Tile[] moveBlockingTiles = GetMoveBlockingTiles();
-            if (moveBlockingTiles.Length == 0) return null;
+            List<Tile> moveBlockingTiles = GetMoveBlockingTiles();
+            if (moveBlockingTiles.Count == 0) return null;
 
-            return moveBlockingTiles[rnd.Next(0, moveBlockingTiles.Length)];
+            return moveBlockingTiles[rnd.Next(0, moveBlockingTiles.Count)];
         }
     }
 }
