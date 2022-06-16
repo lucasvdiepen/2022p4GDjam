@@ -12,8 +12,8 @@ namespace GameJam.Game
     public static class TrapGenerator
     {
         private static readonly Func<ObjectBehaviour>[] traps = {
-            () => { return new Saw(2); },
-            () => { return new Turret(2, 0.5f); },
+            //() => { return new Saw(2); },
+            //() => { return new Turret(2, 0.5f); },
             () => { return new Spike(); }
         };
 

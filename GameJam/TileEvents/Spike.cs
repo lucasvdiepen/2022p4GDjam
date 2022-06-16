@@ -22,11 +22,41 @@ namespace GameJam.TileEvents
 
         public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
         {
+            Vector2[] posibleDirections = new Vector2[]
+            {
+                new Vector2(-1, 0),
+                new Vector2(1, 0),
+                new Vector2(0, 1),
+                new Vector2(0, -1)
+            };
+
             var tryTimes = 10;
             for (int i = 0; i < tryTimes; i++)
             {
-                room.GetRandomMoveBlockingTile(rnd);
+                Tile randomBlockingTile = room.GetRandomMoveBlockingTile(rnd);
+                Vector2 randomBlockingTilePosition = new Vector2(randomBlockingTile.rectangle.X, randomBlockingTile.rectangle.Y);
+
+                List<Vector2> suitableDirection = new List<Vector2>();
+                foreach(Vector2 direction in posibleDirections)
+                {
+                    Vector2 newPosition = randomBlockingTilePosition + direction * tileSize;
+
+                    // todo: && check if buildable
+                    if (!room.IsMoveBlocked(newPosition) && room.IsBuildable(newPosition)) suitableDirection.Add(direction);
+                }
+
+                if (suitableDirection.Count == 0)
+                {
+                    // todo: remove from blocking tiles list and try again
+                    continue;
+                }
+
+                _direction = suitableDirection[rnd.Next(0, suitableDirection.Count)];
+
+                return randomBlockingTilePosition + _direction * tileSize;
             }
+
+            return null;
         }
     }
 }

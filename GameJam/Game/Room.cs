@@ -36,6 +36,44 @@ namespace GameJam.Game
             return IsMoveBlocked(tile);
         }
 
+        public bool IsMoveBlocked(Vector2 position)
+        {
+            return IsMoveBlocked(position.x, position.y);
+        }
+
+        public bool IsBuildable(int x, int y)
+        {
+            Tile tile = GetTile(x, y);
+
+            return IsBuildable(tile);
+        }
+
+        public bool IsBuildable(Vector2 position)
+        {
+            return IsBuildable(position.x, position.y);
+        }
+
+        public bool IsBuildable(Tile tile)
+        {
+            //Check if tile is buildable
+            if (tile == null) return false;
+            if (tile.tileBehaviour != null && !tile.tileBehaviour.IsBuildable) return false;
+
+            return IsActiveRenderObjectBuildable(tile.rectangle.X, tile.rectangle.Y);
+        }
+
+        public bool IsActiveRenderObjectBuildable(int x, int y)
+        {
+            RenderObject[] activeRenderObjects = GetActiveObjects(x, y);
+
+            foreach (RenderObject activeObject in activeRenderObjects)
+            {
+                if (activeObject.objectBehaviour != null && !activeObject.objectBehaviour.IsBuildable) return false;
+            }
+
+            return true;
+        }
+
         public bool IsActiveRenderObjectBlocking(int x, int y)
         {
             RenderObject[] activeRenderObjects = GetActiveObjects(x, y);
