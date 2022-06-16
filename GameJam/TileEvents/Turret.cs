@@ -54,13 +54,7 @@ namespace GameJam.TileEvents
         {
             var newLocation = room.GetRandomBuildableTile(rnd);
 
-            Vector2[] directions = new Vector2[]
-            {
-                new Vector2(-1, 0),
-                new Vector2(1, 0),
-                new Vector2(0, 1),
-                new Vector2(0, -1)
-            };
+            Vector2[] directions = Vector2.AllDirections;
 
             int[] freespace = new int[directions.Length];
 

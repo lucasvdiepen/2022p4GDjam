@@ -22,14 +22,6 @@ namespace GameJam.TileEvents
 
         public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
         {
-            Vector2[] posibleDirections = new Vector2[]
-            {
-                new Vector2(-1, 0),
-                new Vector2(1, 0),
-                new Vector2(0, 1),
-                new Vector2(0, -1)
-            };
-
             var tryTimes = 10;
             for (int i = 0; i < tryTimes; i++)
             {
@@ -37,7 +29,7 @@ namespace GameJam.TileEvents
                 Vector2 randomBlockingTilePosition = new Vector2(randomBlockingTile.rectangle.X, randomBlockingTile.rectangle.Y);
 
                 List<Vector2> suitableDirection = new List<Vector2>();
-                foreach(Vector2 direction in posibleDirections)
+                foreach(Vector2 direction in Vector2.AllDirections)
                 {
                     Vector2 newPosition = randomBlockingTilePosition + direction * tileSize;
 
