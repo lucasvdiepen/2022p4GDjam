@@ -56,20 +56,27 @@ namespace GameJam.TileEvents
 
             Vector2[] directions = Vector2.AllDirections;
 
-            int[] freespace = new int[directions.Length];
+            int[] freeSpaces = GetFreeSpaceCountInDirections(room, newLocation, directions);
 
-            var l = directions.Length;
-            for(int i = 0; i < l; i++)
-            {
-                freespace[i] = FreeSpaceCount(room, newLocation, directions[i]);
-            }
-
-            _direction = directions[Array.IndexOf(freespace, freespace.Max())];
+            _direction = directions[Array.IndexOf(freeSpaces, freeSpaces.Max())];
 
             return newLocation;
         }
 
-        private int FreeSpaceCount(Room room, Vector2 startPosition, Vector2 direction)
+        private int[] GetFreeSpaceCountInDirections(Room room, Vector2 startPosition, Vector2[] directions)
+        {
+            var l = directions.Length;
+            int[] freeSpaces = new int[l];
+
+            for (int i = 0; i < l; i++)
+            {
+                freeSpaces[i] = GetFreeSpaceCountInDirection(room, startPosition, directions[i]);
+            }
+
+            return freeSpaces;
+        }
+
+        private int GetFreeSpaceCountInDirection(Room room, Vector2 startPosition, Vector2 direction)
         {
             int c = 0;
             Vector2 newPosition = startPosition;
