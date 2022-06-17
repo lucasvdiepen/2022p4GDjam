@@ -48,9 +48,9 @@ namespace GameJam.Game
             tileObjects.Add('E', () => { return new Door(); });
             tileObjects.Add('S', () => { return new Door(); });
 
-            tileObjects.Add('1', () => { return new TileBehaviour(true); });
-            tileObjects.Add('2', () => { return new TileBehaviour(true); });
-            tileObjects.Add('3', () => { return new TileBehaviour(true); });
+            tileObjects.Add('1', () => { return new TileBehaviour(true, false); });
+            tileObjects.Add('2', () => { return new TileBehaviour(true, false); });
+            tileObjects.Add('3', () => { return new TileBehaviour(true, false); });
 
             tileObjects.Add('!', () => { return new Stair(-1); });
             tileObjects.Add('?', () => { return new Stair(1); });
