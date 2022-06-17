@@ -49,7 +49,15 @@ namespace GameJam.Game
 
             List<RenderObject> activeObjects = context.room.activeObjects;
 
+
             g.DrawString(hp.GiveHealth().ToString(), font, Brushes.Black, 1,1);
+
+            int c = activeObjects.Count;
+            for(int i = 0; i < c; i++)
+            {
+                RenderObject(g, activeObjects[i]);
+            }
+
         }
 
         private void RenderRoom(Graphics g)
@@ -65,7 +73,7 @@ namespace GameJam.Game
 
         private void RenderObject(Graphics g, RenderObject renderObject)
         {
-            g.DrawImage(image, renderObject.rectangle, renderObject.frames[(int)renderObject.frame], GraphicsUnit.Pixel);
+            g.DrawImage(image, renderObject.rectangle, renderObject.frames[renderObject.frame], GraphicsUnit.Pixel);
             renderObject.MoveFrame(frametime);
         }
 

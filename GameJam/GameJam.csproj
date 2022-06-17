@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{ADA47F88-2FBD-4120-A1A4-8EBA55C7D75C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WindowsFormsApp1</RootNamespace>
+    <RootNamespace>GameJam</RootNamespace>
     <AssemblyName>WindowsFormsApp1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -77,8 +77,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio.cs" />
+    <Compile Include="Enums\Direction2D.cs" />
+    <Compile Include="Enums\HeartState.cs" />
+    <Compile Include="Events\UpdateEvent.cs" />
     <Compile Include="Game\Health.cs" />
+    <Compile Include="Events\CanEnterEvent.cs" />
+    <Compile Include="Events\MoveEvent.cs" />
+    <Compile Include="Game\TrapGenerator.cs" />
+    <Compile Include="Game\Vector2Comparer.cs" />
+    <Compile Include="TileEvents\Bullet.cs" />
+    <Compile Include="TileEvents\Door.cs" />
+    <Compile Include="TileEvents\ITrap.cs" />
+    <Compile Include="TileEvents\ObjectBehaviour.cs" />
     <Compile Include="Game\SpriteMap.cs" />
+    <Compile Include="Game\Vector2.cs" />
+    <Compile Include="TileEvents\Spike.cs" />
+    <Compile Include="TileEvents\Stair.cs" />
+    <Compile Include="TileEvents\TileBehaviour.cs" />
+    <Compile Include="TileEvents\TimerBehaviour.cs" />
+    <Compile Include="TileEvents\Saw.cs" />
+    <Compile Include="TileEvents\Turret.cs" />
     <Compile Include="Tools\FileLevelDataSource.cs" />
     <Compile Include="Game\GameContext.cs" />
     <Compile Include="Game\GameRenderer.cs" />
@@ -96,6 +114,7 @@
     <Compile Include="Game\RenderObject.cs" />
     <Compile Include="Game\Room.cs" />
     <Compile Include="Game\Tile.cs" />
+    <Compile Include="Utils\CollisionUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -104,6 +123,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="RenderForm.resx">
       <DependentUpon>RenderForm.cs</DependentUpon>
@@ -124,13 +144,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="leveldata\room.0.0.txt">
+    <Content Include="leveldata\room.-1.0.0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="leveldata\room.0.1.txt">
+    <Content Include="leveldata\room.0.0.0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="leveldata\room.1.0.txt">
+    <Content Include="leveldata\room.0.0.1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="leveldata\room.1.0.0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="sprites.png">

@@ -1,7 +1,10 @@
+using GameJam.Events;
 using GameJam.Game;
+using GameJam.TileEvents;
 using GameJam.Tools;
 using NAudio.Wave;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -11,13 +14,13 @@ namespace GameJam
 {
     public partial class RenderForm : Form
     {
-
-
         private LevelLoader levelLoader;
         private float frametime;
         private GameRenderer renderer;
-        private Audio audio;
+        //private Audio audio;
         private readonly GameContext gc = new GameContext();
+        private Tile _previousTile;
+
         public RenderForm()
         {
             InitializeComponent();
@@ -34,23 +37,23 @@ namespace GameJam
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             renderer.Dispose();
-            audio.Dispose();
+            //audio.Dispose();
         }
         private void RenderForm_Load(object sender, EventArgs e)
         {
             levelLoader = new LevelLoader(gc.tileSize, new FileLevelDataSource());
-            levelLoader.LoadRooms(gc.spriteMap.GetMap());
+            levelLoader.LoadRooms(gc.spriteMap);
 
             renderer = new GameRenderer(gc);
 
-            gc.room = levelLoader.GetRoom(0, 0);
+            gc.room = levelLoader.GetRoom(0, 0, 0);
 
             gc.player = new RenderObject()
             {
                 frames = gc.spriteMap.GetPlayerFrames(),
                 rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
+                animationTime = 0.1f
             };
-
 
             ClientSize =
              new Size(
@@ -86,28 +89,46 @@ namespace GameJam
             float newx = player.rectangle.X + (x * gc.tileSize);
             float newy = player.rectangle.Y + (y * gc.tileSize);
 
-            Tile next = gc.room.tiles.SelectMany(ty => ty.Where(tx => tx.rectangle.Contains((int)newx, (int)newy))).FirstOrDefault();
+            Tile next = gc.room.GetTile((int)newx, (int)newy);
 
             if (next != null)
             {
-                if (next.graphic == 'D')
+                MoveEvent newMoveEvent = new MoveEvent()
                 {
-                    gc.room = levelLoader.GetRoom(gc.room.roomx + x, gc.room.roomy + y);
+                    GameContext = gc,
+                    GameRenderer = renderer,
+                    LevelLoader = levelLoader,
+                    PlayerRenderer = player,
+                    Direction = new Vector2(x, y)
+                };
 
-                    if (y != 0)
-                    {
-                        player.rectangle.Y += -y * ((gc.room.tiles.Length - 2) * gc.tileSize);
-                    }
-                    else
-                    {
-                        player.rectangle.X += -x * ((gc.room.tiles[0].Length - 2) * gc.tileSize);
-                    }
-                }
+                CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
 
-                else if (next.graphic != '#')
+                //Move the player
+                if ((canEnterEvent == null || !canEnterEvent.BlockMovement) && !gc.room.IsActiveRenderObjectBlocking((int)newx, (int)newy))
                 {
                     player.rectangle.X = newx;
                     player.rectangle.Y = newy;
+
+                    RenderObject[] activeRenderObjects = gc.room.GetActiveObjects((int)newx, (int)newy);
+
+                    //Call render object events
+                    foreach (RenderObject renderObject in activeRenderObjects)
+                    {
+                        renderObject.objectBehaviour?.OnEnter(newMoveEvent);
+                    }
+                }
+
+                //Call tile object events
+                if (canEnterEvent == null || !canEnterEvent.BlockEvents)
+                {
+                    _previousTile?.tileBehaviour?.OnExit(newMoveEvent);
+                    next.tileBehaviour?.OnEnter(newMoveEvent);
+                }
+
+                if (canEnterEvent == null || !canEnterEvent.BlockMovement || !canEnterEvent.BlockEvents)
+                {
+                    _previousTile = next;
                 }
             }
         }
@@ -115,6 +136,31 @@ namespace GameJam
         public void Logic(float frametime)
         {
             this.frametime = frametime;
+
+            var newUpdateEvent = new UpdateEvent()
+            {
+                FrameTime = frametime,
+                GameContext = gc
+            };
+
+            //Update all tiles
+            Tile[] allTiles = gc.room.GetAllTiles();
+
+            int c = allTiles.Length;
+            for (int i = 0; i < c; i++)
+            {
+                allTiles[i].tileBehaviour?.Update(newUpdateEvent);
+            }
+
+            //Update active objects
+            List<RenderObject> activeObjects = gc.room.activeObjects;
+
+            int l = activeObjects.Count;
+            for(int i = l - 1; i >= 0; i--)
+            {
+                newUpdateEvent.RenderObject = activeObjects[i];
+                activeObjects[i].objectBehaviour?.Update(newUpdateEvent);
+            }
         }
         protected override void OnPaint(PaintEventArgs e)
         {
