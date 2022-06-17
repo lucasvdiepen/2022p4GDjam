@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using GameJam.Utils;
 
 namespace GameJam.Game
 {
@@ -16,8 +17,7 @@ namespace GameJam.Game
         {
             this.context = context;
 
-            image = Bitmap.FromFile("sprites.png");
-
+            image = EmbeddedFileReaderUtility.ReadImage("sprites.png");
         }
         private Graphics InitGraphics(PaintEventArgs e)
         {

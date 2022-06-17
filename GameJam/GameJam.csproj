@@ -115,6 +115,7 @@
     <Compile Include="Game\Room.cs" />
     <Compile Include="Game\Tile.cs" />
     <Compile Include="Utils\CollisionUtility.cs" />
+    <Compile Include="Utils\EmbeddedFileReaderUtility.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -156,9 +157,7 @@
     <Content Include="leveldata\room.1.0.0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="sprites.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="sprites.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
