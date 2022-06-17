@@ -18,6 +18,7 @@ namespace GameJam.Game
 
         private readonly Rectangle[] playerAnimation;
         private readonly Rectangle[] sawAnimation;
+        private readonly Rectangle[] bulletExplosionAnimation;
 
         internal SpriteMap()
         {
@@ -118,6 +119,11 @@ namespace GameJam.Game
                     new Rectangle(191, 159, 16, 16),
                     new Rectangle(212, 159, 16, 16)
             };
+
+            bulletExplosionAnimation = new Rectangle[]
+            {
+                new Rectangle(212, 180, 16, 16)
+            };
         }
 
         internal Dictionary<char, Rectangle> GetMap()
@@ -157,6 +163,11 @@ namespace GameJam.Game
         internal Rectangle[] GetHeartFrames(HeartState heartState)
         {
             return new Rectangle[] { heart[heartState] };
+        }
+
+        internal Rectangle[] GetBulletExplosionFrames()
+        {
+            return bulletExplosionAnimation;
         }
     }
 }
