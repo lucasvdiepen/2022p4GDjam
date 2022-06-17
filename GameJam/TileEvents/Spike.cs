@@ -13,6 +13,11 @@ namespace GameJam.TileEvents
     {
         private Vector2 _direction;
 
+        public Spike() : base(false, false)
+        {
+
+        }
+
         public override void OnEnter(MoveEvent moveEvent)
         {
             moveEvent.GameContext.playerHealth.RemoveHealth(1);
