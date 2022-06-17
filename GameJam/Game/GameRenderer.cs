@@ -50,7 +50,7 @@ namespace GameJam.Game
             List<RenderObject> activeObjects = context.room.activeObjects;
 
 
-            g.DrawString(hp.GiveHealth().ToString(), font, Brushes.Black, 1,1);
+            g.DrawString(hp.CurrentHp.ToString(), font, Brushes.Black, 1,1);
 
             int c = activeObjects.Count;
             for(int i = 0; i < c; i++)
