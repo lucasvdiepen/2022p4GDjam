@@ -9,7 +9,6 @@ namespace GameJam.Game
     {
         private readonly Dictionary<char, Rectangle> tileMap = new Dictionary<char, Rectangle>();
         private readonly Dictionary<char, Func<TileBehaviour>> tileObjects = new Dictionary<char, Func<TileBehaviour>>();
-        private readonly Dictionary<char, Rectangle> heart = new Dictionary<char, Rectangle>();
 
         private readonly Dictionary<Vector2, Rectangle> wallSpikes = new Dictionary<Vector2, Rectangle>();
         private readonly Dictionary<Vector2, Rectangle> turret = new Dictionary<Vector2, Rectangle>();
@@ -64,8 +63,8 @@ namespace GameJam.Game
             turret.Add(new Vector2(-1, 0), new Rectangle(107, 180, 16, 16));
 
             //Heart sprites full heart (H) empthy heart (h);
-            heart.Add('H', new Rectangle(2, 180, 16, 16));
-            heart.Add('h', new Rectangle(23, 180, 16, 16));
+            heart.Add('Full', new Rectangle(2, 180, 16, 16));
+            heart.Add('Empty', new Rectangle(23, 180, 16, 16));
 
             //Bullet Animation Dictinary;
             bullet.Add(new Vector2(0, -1), new Rectangle[] 
