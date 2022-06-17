@@ -12,22 +12,27 @@ namespace GameJam.TileEvents
         private float _timeElapsed;
         private float _time;
 
-        public TimerBehaviour(bool isMoveBlocked, bool isBuildable, float time) : base(isMoveBlocked, isBuildable)
+        public TimerBehaviour(bool isMoveBlocked, bool isBuildable, float time, float timeElapsed = 0f) : base(isMoveBlocked, isBuildable)
         {
             _time = time;
+            _timeElapsed = timeElapsed;
         }
 
         public override void Update(UpdateEvent updateEvent)
         {
             _timeElapsed += updateEvent.FrameTime;
 
-            if (_timeElapsed >= _time)
+            while(true)
             {
-                _timeElapsed -= _time;
-                TimerTick(updateEvent);
+                if (_timeElapsed >= _time)
+                {
+                    _timeElapsed -= _time;
+                    TimerTick(updateEvent, _timeElapsed);
+                }
+                else break;
             }
         }
 
-        public abstract void TimerTick(UpdateEvent updateEvent);
+        public abstract void TimerTick(UpdateEvent updateEvent, float frameTimeLeft);
     }
 }

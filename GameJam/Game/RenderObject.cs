@@ -15,6 +15,11 @@ namespace GameJam.Game
 
         private float timeElapsed;
 
+        public RenderObject(float frameTimeLeft = 0)
+        {
+            timeElapsed = frameTimeLeft;
+        }
+
         internal void MoveFrame(float frametime)
         {
             if (frames.Length <= 1) return;

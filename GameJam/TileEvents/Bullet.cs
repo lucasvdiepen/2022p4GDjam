@@ -14,12 +14,12 @@ namespace GameJam.TileEvents
     {
         private Vector2 _direction;
 
-        public Bullet(Vector2 direction, float moveTime) : base(false, true, moveTime)
+        public Bullet(Vector2 direction, float moveTime, float frameTimeLeft) : base(false, true, moveTime, frameTimeLeft)
         {
             _direction = direction;
         }
 
-        public override void TimerTick(UpdateEvent updateEvent)
+        public override void TimerTick(UpdateEvent updateEvent, float frameTimeLeft)
         {
             Move(updateEvent.GameContext, updateEvent.RenderObject);
         }
