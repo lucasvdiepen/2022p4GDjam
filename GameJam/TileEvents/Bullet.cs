@@ -42,7 +42,7 @@ namespace GameJam.TileEvents
                 {
                     frames = gameContext.spriteMap.GetBulletExplosionFrames(),
                     rectangle = new Rectangle((int)renderObject.rectangle.X, (int)renderObject.rectangle.Y, gameContext.tileSize, gameContext.tileSize),
-                    objectBehaviour = new BulletExplosion(1, frameTimeLeft),
+                    objectBehaviour = new BulletExplosion(0.6f, frameTimeLeft),
                 };
 
                 gameContext.room.activeObjects.Add(newBulletExplosion);
