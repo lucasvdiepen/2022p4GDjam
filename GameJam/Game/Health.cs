@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GameJam.Game
 {
@@ -21,6 +22,7 @@ namespace GameJam.Game
         public void ResetHP()
         {
             CurrentHp = StartHp;
+            Application.Restart();
         }
 
         public void AddHealth(int health)
