@@ -9,20 +9,25 @@ namespace GameJam.TileEvents
 {
     public class Door : TileBehaviour
     {
+        public Door() : base(true, false)
+        {
+
+        }
+
         public override CanEnterEvent CanEnter(MoveEvent moveEvent)
         {
-            moveEvent.GameContext.room = moveEvent.LevelLoader.GetRoom(moveEvent.GameContext.room.roomx + (int)moveEvent.Direction.x, moveEvent.GameContext.room.roomy, moveEvent.GameContext.room.roomz + (int)moveEvent.Direction.y);
+            moveEvent.GameContext.room = moveEvent.LevelLoader.GetRoom(moveEvent.GameContext.room.roomx + moveEvent.Direction.x, moveEvent.GameContext.room.roomy, moveEvent.GameContext.room.roomz + moveEvent.Direction.y);
 
-            if ((int)moveEvent.Direction.y != 0)
+            if (moveEvent.Direction.y != 0)
             {
-                moveEvent.PlayerRenderer.rectangle.Y += -(int)moveEvent.Direction.y * ((moveEvent.GameContext.room.tiles.Length - 2) * moveEvent.GameContext.tileSize);
+                moveEvent.PlayerRenderer.rectangle.Y += -moveEvent.Direction.y * ((moveEvent.GameContext.room.tiles.Length - 2) * moveEvent.GameContext.tileSize);
             }
             else
             {
-                moveEvent.PlayerRenderer.rectangle.X += -(int)moveEvent.Direction.x * ((moveEvent.GameContext.room.tiles[0].Length - 2) * moveEvent.GameContext.tileSize);
+                moveEvent.PlayerRenderer.rectangle.X += -moveEvent.Direction.x * ((moveEvent.GameContext.room.tiles[0].Length - 2) * moveEvent.GameContext.tileSize);
             }
 
-            return new CanEnterEvent() { BlockMovement = true, BlockEvents = false };
+            return new CanEnterEvent() { BlockMovement = IsMoveBlocked, BlockEvents = false };
         }
     }
 }

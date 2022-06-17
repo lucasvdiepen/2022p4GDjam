@@ -21,7 +21,6 @@ namespace GameJam
             Application.SetCompatibleTextRenderingDefault(false);
 
             RenderForm form = new RenderForm();
-            Health hp = new Health(3);
 
             form.FormClosing += Form_FormClosing;
             form.Show();

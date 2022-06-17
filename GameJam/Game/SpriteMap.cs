@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using GameJam.Enums;
 using GameJam.TileEvents;
 
 namespace GameJam.Game
 {
-    internal class SpriteMap
+    public class SpriteMap
     {
         private readonly Dictionary<char, Rectangle> tileMap = new Dictionary<char, Rectangle>();
         private readonly Dictionary<char, Func<TileBehaviour>> tileObjects = new Dictionary<char, Func<TileBehaviour>>();
 
-        private readonly Dictionary<Vector2, Rectangle> wallSpikes = new Dictionary<Vector2, Rectangle>();
-        private readonly Dictionary<Vector2, Rectangle> turret = new Dictionary<Vector2, Rectangle>();
-        private readonly Dictionary<Vector2, Rectangle[]> bullet = new Dictionary<Vector2, Rectangle[]>();
+        private readonly Dictionary<HeartState, Rectangle> heart = new Dictionary<HeartState, Rectangle>();
+        private readonly Dictionary<Vector2, Rectangle> wallSpikes = new Dictionary<Vector2, Rectangle>(new Vector2Comparer());
+        private readonly Dictionary<Vector2, Rectangle> turret = new Dictionary<Vector2, Rectangle>(new Vector2Comparer());
+        private readonly Dictionary<Vector2, Rectangle[]> bullet = new Dictionary<Vector2, Rectangle[]>(new Vector2Comparer());
 
         private readonly Rectangle[] playerAnimation;
         private readonly Rectangle[] sawAnimation;
@@ -45,10 +47,13 @@ namespace GameJam.Game
             tileObjects.Add('W', () => { return new Door(); });
             tileObjects.Add('E', () => { return new Door(); });
             tileObjects.Add('S', () => { return new Door(); });
-            //tileObjects.Add('#', () => { return new TileBehaviour(true); });
+
             tileObjects.Add('1', () => { return new TileBehaviour(true); });
             tileObjects.Add('2', () => { return new TileBehaviour(true); });
             tileObjects.Add('3', () => { return new TileBehaviour(true); });
+
+            tileObjects.Add('!', () => { return new Stair(-1); });
+            tileObjects.Add('?', () => { return new Stair(1); });
 
             //Wall Spike sprites for GameObject;
             wallSpikes.Add(new Vector2(0, -1), new Rectangle(86, 138, 16, 16));
@@ -62,41 +67,37 @@ namespace GameJam.Game
             turret.Add(new Vector2(0, 1), new Rectangle(86, 180, 16, 16));
             turret.Add(new Vector2(-1, 0), new Rectangle(107, 180, 16, 16));
 
-            //Heart sprites full heart (H) empthy heart (h);
-            heart.Add('Full', new Rectangle(2, 180, 16, 16));
-            heart.Add('Empty', new Rectangle(23, 180, 16, 16));
+            //Heart sprites
+            heart.Add(HeartState.Full, new Rectangle(2, 180, 16, 16));
+            heart.Add(HeartState.Empty, new Rectangle(23, 180, 16, 16));
 
             //Bullet Animation Dictinary;
             bullet.Add(new Vector2(0, -1), new Rectangle[] 
             {   
                 new Rectangle(128, 180, 16, 16),
                 new Rectangle(128, 201, 16, 16),
-                new Rectangle(128, 222, 16, 16),
-                new Rectangle(128, 243, 16, 16)
+                new Rectangle(128, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(1, 0), new Rectangle[] 
             {
                 new Rectangle(149, 180, 16, 16),
                 new Rectangle(149, 201, 16, 16),
-                new Rectangle(149, 222, 16, 16),
-                new Rectangle(149, 243, 16, 16)
+                new Rectangle(149, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(0, 1), new Rectangle[] 
             {
                 new Rectangle(170, 180, 16, 16),
                 new Rectangle(170, 201, 16, 16),
-                new Rectangle(170, 222, 16, 16),
-                new Rectangle(170, 243, 16, 16)
+                new Rectangle(170, 222, 16, 16)
             });
 
             bullet.Add(new Vector2(-1, 0), new Rectangle[] 
             {
-                new Rectangle(170, 180, 16, 16),
-                new Rectangle(170, 201, 16, 16),
-                new Rectangle(170, 222, 16, 16),
-                new Rectangle(170, 243, 16, 16)
+                new Rectangle(191, 180, 16, 16),
+                new Rectangle(191, 201, 16, 16),
+                new Rectangle(191, 222, 16, 16)
             });
 
             playerAnimation = new Rectangle[]
@@ -109,13 +110,13 @@ namespace GameJam.Game
             sawAnimation = new Rectangle[]
             {
                     new Rectangle(149, 138, 16, 16),
-                    new Rectangle(160, 138, 16, 16),
-                    new Rectangle(181, 138, 16, 16),
-                    new Rectangle(202, 138, 16, 16),
+                    new Rectangle(170, 138, 16, 16),
+                    new Rectangle(191, 138, 16, 16),
+                    new Rectangle(212, 138, 16, 16),
                     new Rectangle(149, 159, 16, 16),
-                    new Rectangle(160, 159, 16, 16),
-                    new Rectangle(181, 159, 16, 16),
-                    new Rectangle(202, 159, 16, 16)
+                    new Rectangle(170, 159, 16, 16),
+                    new Rectangle(191, 159, 16, 16),
+                    new Rectangle(212, 159, 16, 16)
             };
         }
 
@@ -141,6 +142,21 @@ namespace GameJam.Game
         internal Rectangle[] GetBulletFrames(Vector2 direction)
         {
             return bullet[direction];
+        }
+
+        internal Rectangle[] GetTurretFrames(Vector2 direction)
+        {
+            return new Rectangle[] { turret[direction] };
+        }
+
+        internal Rectangle[] GetWallSpikeFrames(Vector2 direction)
+        {
+            return new Rectangle[] { wallSpikes[direction] };
+        }
+
+        internal Rectangle[] GetHeartFrames(HeartState heartState)
+        {
+            return new Rectangle[] { heart[heartState] };
         }
     }
 }

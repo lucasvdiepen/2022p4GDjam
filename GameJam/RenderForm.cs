@@ -17,7 +17,7 @@ namespace GameJam
         private LevelLoader levelLoader;
         private float frametime;
         private GameRenderer renderer;
-        private Audio audio;
+        //private Audio audio;
         private readonly GameContext gc = new GameContext();
         private Tile _previousTile;
 
@@ -37,12 +37,12 @@ namespace GameJam
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             renderer.Dispose();
-            audio.Dispose();
+            //audio.Dispose();
         }
         private void RenderForm_Load(object sender, EventArgs e)
         {
             levelLoader = new LevelLoader(gc.tileSize, new FileLevelDataSource());
-            levelLoader.LoadRooms(gc.spriteMap.GetMap(), gc.spriteMap.GetTileObjects());
+            levelLoader.LoadRooms(gc.spriteMap);
 
             renderer = new GameRenderer(gc);
 
@@ -51,13 +51,8 @@ namespace GameJam
             gc.player = new RenderObject()
             {
                 frames = gc.spriteMap.GetPlayerFrames(),
-                rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize)
-            };
-
-            gc.saw = new RenderObject()
-            {
-                frames = gc.spriteMap.GetSawFrames(),
                 rectangle = new Rectangle(2 * gc.tileSize, 2 * gc.tileSize, gc.tileSize, gc.tileSize),
+                animationTime = 0.1f
             };
 
             ClientSize =
@@ -94,7 +89,7 @@ namespace GameJam
             float newx = player.rectangle.X + (x * gc.tileSize);
             float newy = player.rectangle.Y + (y * gc.tileSize);
 
-            Tile next = gc.room.tiles.SelectMany(ty => ty.Where(tx => tx.rectangle.Contains((int)newx, (int)newy))).FirstOrDefault();
+            Tile next = gc.room.GetTile((int)newx, (int)newy);
 
             if (next != null)
             {
@@ -109,26 +104,23 @@ namespace GameJam
 
                 CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
 
-                if (canEnterEvent == null || !canEnterEvent.BlockMovement)
+                //Move the player
+                if ((canEnterEvent == null || !canEnterEvent.BlockMovement) && !gc.room.IsActiveRenderObjectBlocking((int)newx, (int)newy))
                 {
                     player.rectangle.X = newx;
                     player.rectangle.Y = newy;
 
-                    List<RenderObject> activeObjects = gc.room.activeObjects;
+                    RenderObject[] activeRenderObjects = gc.room.GetActiveObjects((int)newx, (int)newy);
 
-                    int c = activeObjects.Count;
-                    for (int i = 0; i < c; i++)
+                    //Call render object events
+                    foreach (RenderObject renderObject in activeRenderObjects)
                     {
-                        RenderObject currentObject = activeObjects[i];
-
-                        if ((int)currentObject.rectangle.X == newx && (int)currentObject.rectangle.Y == newy)
-                        {
-                            currentObject.objectBehaviour?.OnEnter(newMoveEvent);
-                        }
+                        renderObject.objectBehaviour?.OnEnter(newMoveEvent);
                     }
                 }
 
-                if(canEnterEvent == null || !canEnterEvent.BlockEvents)
+                //Call tile object events
+                if (canEnterEvent == null || !canEnterEvent.BlockEvents)
                 {
                     _previousTile?.tileBehaviour?.OnExit(newMoveEvent);
                     next.tileBehaviour?.OnEnter(newMoveEvent);
@@ -145,22 +137,29 @@ namespace GameJam
         {
             this.frametime = frametime;
 
+            var newUpdateEvent = new UpdateEvent()
+            {
+                FrameTime = frametime,
+                GameContext = gc
+            };
+
             //Update all tiles
             Tile[] allTiles = gc.room.GetAllTiles();
 
             int c = allTiles.Length;
             for (int i = 0; i < c; i++)
             {
-                allTiles[i].tileBehaviour?.Update(frametime);
+                allTiles[i].tileBehaviour?.Update(newUpdateEvent);
             }
 
             //Update active objects
             List<RenderObject> activeObjects = gc.room.activeObjects;
 
             int l = activeObjects.Count;
-            for(int i = 0; i < l; i++)
+            for(int i = l - 1; i >= 0; i--)
             {
-                activeObjects[i].objectBehaviour?.Update(frametime);
+                newUpdateEvent.RenderObject = activeObjects[i];
+                activeObjects[i].objectBehaviour?.Update(newUpdateEvent);
             }
         }
         protected override void OnPaint(PaintEventArgs e)
