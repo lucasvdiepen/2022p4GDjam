@@ -21,12 +21,12 @@ namespace GameJam.TileEvents
             _bulletSpeed = bulletSpeed;
         }
 
-        public override void TimerTick(UpdateEvent updateEvent)
+        public override void TimerTick(UpdateEvent updateEvent, float frameTimeLeft)
         {
-            Shoot(updateEvent.GameContext, updateEvent.RenderObject);
+            Shoot(updateEvent.GameContext, updateEvent.RenderObject, frameTimeLeft);
         }
 
-        private void Shoot(GameContext gameContext, RenderObject renderObject)
+        private void Shoot(GameContext gameContext, RenderObject renderObject, float frameTimeLeft)
         {
             Vector2 spawnPosition = new Vector2(renderObject.rectangle.X + gameContext.tileSize * _direction.x, renderObject.rectangle.Y + gameContext.tileSize * _direction.y);
 
@@ -34,11 +34,11 @@ namespace GameJam.TileEvents
 
             var bulletFrames = gameContext.spriteMap.GetBulletFrames(_direction);
 
-            var newBullet = new RenderObject()
+            var newBullet = new RenderObject(frameTimeLeft)
             {
                 frames = bulletFrames,
                 rectangle = new Rectangle(spawnPosition.x, spawnPosition.y, gameContext.tileSize, gameContext.tileSize),
-                objectBehaviour = new Bullet(_direction, _bulletSpeed),
+                objectBehaviour = new Bullet(_direction, _bulletSpeed, frameTimeLeft),
                 animationTime = _bulletSpeed / bulletFrames.Length
             };
 

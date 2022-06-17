@@ -13,18 +13,23 @@ namespace GameJam.Game
 
         internal Rectangle[] frames;
 
-        private float timeElapsed;
+        private float _timeElapsed;
+
+        public RenderObject(float frameTimeLeft = 0)
+        {
+            _timeElapsed = frameTimeLeft;
+        }
 
         internal void MoveFrame(float frametime)
         {
             if (frames.Length <= 1) return;
 
-            timeElapsed += frametime;
+            _timeElapsed += frametime;
 
-            if (timeElapsed >= animationTime)
+            if (_timeElapsed >= animationTime)
             {
-                frame += (int)Math.Floor(timeElapsed / animationTime);
-                timeElapsed %= animationTime;
+                frame += (int)Math.Floor(_timeElapsed / animationTime);
+                _timeElapsed %= animationTime;
                 if (frame >= frames.Length)
                 {
                     frame %= frames.Length;
