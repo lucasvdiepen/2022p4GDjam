@@ -13,7 +13,8 @@ namespace GameJam.Game
     {
         private static readonly Func<ObjectBehaviour>[] traps = {
             () => { return new Saw(2); },
-            () => { return new Turret(2, 0.5f); }
+            () => { return new Turret(2, 0.5f); },
+            () => { return new Spike(); }
         };
 
         private const int trapsPerRoom = 5;

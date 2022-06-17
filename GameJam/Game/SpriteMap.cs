@@ -48,17 +48,17 @@ namespace GameJam.Game
             tileObjects.Add('E', () => { return new Door(); });
             tileObjects.Add('S', () => { return new Door(); });
 
-            tileObjects.Add('1', () => { return new TileBehaviour(true); });
-            tileObjects.Add('2', () => { return new TileBehaviour(true); });
-            tileObjects.Add('3', () => { return new TileBehaviour(true); });
+            tileObjects.Add('1', () => { return new TileBehaviour(true, false); });
+            tileObjects.Add('2', () => { return new TileBehaviour(true, false); });
+            tileObjects.Add('3', () => { return new TileBehaviour(true, false); });
 
             tileObjects.Add('!', () => { return new Stair(-1); });
             tileObjects.Add('?', () => { return new Stair(1); });
 
             //Wall Spike sprites for GameObject;
             wallSpikes.Add(new Vector2(0, -1), new Rectangle(86, 138, 16, 16));
-            wallSpikes.Add(new Vector2(0, 1), new Rectangle(86, 159, 16, 16));
-            wallSpikes.Add(new Vector2(-1, 0), new Rectangle(107, 138, 16, 16));
+            wallSpikes.Add(new Vector2(-1, 0), new Rectangle(86, 159, 16, 16));
+            wallSpikes.Add(new Vector2(0, 1), new Rectangle(107, 138, 16, 16));
             wallSpikes.Add(new Vector2(1, 0), new Rectangle(107, 159, 16, 16));
 
             //Turret sprite for Gameobject;
