@@ -32,5 +32,13 @@ namespace GameJam.Game
         {
             return new Vector2(vector.x * multiplier, vector.y * multiplier);
         }
+
+        public static Vector2[] AllDirections => new Vector2[]
+        {
+            new Vector2(-1, 0),
+            new Vector2(1, 0),
+            new Vector2(0, 1),
+            new Vector2(0, -1)
+        };
     }
 }

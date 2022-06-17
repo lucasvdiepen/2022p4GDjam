@@ -21,12 +21,12 @@ namespace GameJam.TileEvents
             _bulletSpeed = bulletSpeed;
         }
 
-        public override void TimerTick(UpdateEvent updateEvent)
+        public override void TimerTick(UpdateEvent updateEvent, float frameTimeLeft)
         {
-            Shoot(updateEvent.GameContext, updateEvent.RenderObject);
+            Shoot(updateEvent.GameContext, updateEvent.RenderObject, frameTimeLeft);
         }
 
-        private void Shoot(GameContext gameContext, RenderObject renderObject)
+        private void Shoot(GameContext gameContext, RenderObject renderObject, float frameTimeLeft)
         {
             Vector2 spawnPosition = new Vector2(renderObject.rectangle.X + gameContext.tileSize * _direction.x, renderObject.rectangle.Y + gameContext.tileSize * _direction.y);
 
@@ -34,11 +34,11 @@ namespace GameJam.TileEvents
 
             var bulletFrames = gameContext.spriteMap.GetBulletFrames(_direction);
 
-            var newBullet = new RenderObject()
+            var newBullet = new RenderObject(frameTimeLeft)
             {
                 frames = bulletFrames,
                 rectangle = new Rectangle(spawnPosition.x, spawnPosition.y, gameContext.tileSize, gameContext.tileSize),
-                objectBehaviour = new Bullet(_direction, _bulletSpeed),
+                objectBehaviour = new Bullet(_direction, _bulletSpeed, frameTimeLeft),
                 animationTime = _bulletSpeed / bulletFrames.Length
             };
 
@@ -54,28 +54,29 @@ namespace GameJam.TileEvents
         {
             var newLocation = room.GetRandomBuildableTile(rnd);
 
-            Vector2[] directions = new Vector2[]
-            {
-                new Vector2(-1, 0),
-                new Vector2(1, 0),
-                new Vector2(0, 1),
-                new Vector2(0, -1)
-            };
+            Vector2[] directions = Vector2.AllDirections;
 
-            int[] freespace = new int[directions.Length];
+            int[] freeSpaces = GetFreeSpaceCountInDirections(room, newLocation, directions);
 
-            var l = directions.Length;
-            for(int i = 0; i < l; i++)
-            {
-                freespace[i] = FreeSpaceCount(room, newLocation, directions[i]);
-            }
-
-            _direction = directions[Array.IndexOf(freespace, freespace.Max())];
+            _direction = directions[Array.IndexOf(freeSpaces, freeSpaces.Max())];
 
             return newLocation;
         }
 
-        private int FreeSpaceCount(Room room, Vector2 startPosition, Vector2 direction)
+        private int[] GetFreeSpaceCountInDirections(Room room, Vector2 startPosition, Vector2[] directions)
+        {
+            var l = directions.Length;
+            int[] freeSpaces = new int[l];
+
+            for (int i = 0; i < l; i++)
+            {
+                freeSpaces[i] = GetFreeSpaceCountInDirection(room, startPosition, directions[i]);
+            }
+
+            return freeSpaces;
+        }
+
+        private int GetFreeSpaceCountInDirection(Room room, Vector2 startPosition, Vector2 direction)
         {
             int c = 0;
             Vector2 newPosition = startPosition;

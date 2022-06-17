@@ -29,7 +29,7 @@ namespace GameJam.TileEvents
             moveEvent.GameContext.playerHealth.RemoveHealth(1);
         }
 
-        public override void TimerTick(UpdateEvent updateEvent)
+        public override void TimerTick(UpdateEvent updateEvent, float frameTimeLeft)
         {
             Move(updateEvent.GameContext, updateEvent.RenderObject);
         }

@@ -37,6 +37,7 @@ namespace GameJam.Game
         {
             return rooms[$"{roomX}-{roomY}-{roomZ}"];
         }
+
         private Room Load(int roomX, int roomY, int roomZ, SpriteMap spriteMap)
         {
             var tileMap = spriteMap.GetMap();
