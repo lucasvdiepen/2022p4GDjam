@@ -19,9 +19,10 @@ namespace GameJam.Game
 
         private const int trapsPerRoom = 5;
 
+        private static Random rnd = new Random();
+
         public static void GenerateTraps(Room room, SpriteMap spriteMap, int tileSize)
         {
-            Random rnd = new Random();
             for(int i = 0; i < trapsPerRoom; i++)
             {
                 var newTrap = traps[rnd.Next(0, traps.Length)]();
