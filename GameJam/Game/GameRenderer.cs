@@ -48,6 +48,13 @@ namespace GameJam.Game
             {
                 RenderObject(g, activeObjects[i]);
             }
+
+            //Render hearts
+            var heartObjects = HealthRenderer.RenderHearts(context, context.playerHealth.CurrentHp, context.playerHealth.StartHp);
+            foreach(RenderObject renderObject in heartObjects)
+            {
+                RenderObject(g, renderObject);
+            }
         }
 
         private void RenderRoom(Graphics g)

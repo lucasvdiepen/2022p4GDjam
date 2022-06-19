@@ -8,19 +8,19 @@ namespace GameJam.Game
 {
     public class Health
     {
-        private int _startHp;
+        public int StartHp { get; private set; }
         public int CurrentHp { get; private set; }
 
         public Health(int startHp)
         {
-            _startHp = startHp;
-            CurrentHp = _startHp;
+            StartHp = startHp;
+            CurrentHp = StartHp;
         }
 
         //Health functions to be called to modify the health;
         public void ResetHP()
         {
-            CurrentHp = _startHp;
+            CurrentHp = StartHp;
         }
 
         public void AddHealth(int health)
