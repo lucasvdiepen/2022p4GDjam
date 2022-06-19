@@ -19,7 +19,7 @@ namespace GameJam
         private GameRenderer renderer;
         //private Audio audio;
         private readonly GameContext gc = new GameContext();
-        private Tile _previousTile;
+        private PlayerMovement playerMovement = new PlayerMovement();
 
         public RenderForm()
         {
@@ -30,6 +30,7 @@ namespace GameJam
 
             //audio = new Audio();
             KeyDown += RenderForm_KeyDown;
+            KeyUp += RenderForm_KeyUp;
             FormClosing += Form1_FormClosing;
             Load += RenderForm_Load;
         }
@@ -65,72 +66,14 @@ namespace GameJam
 
         private void RenderForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.W)
-            {
-                MovePlayer(0, -1);
-            }
-            else if (e.KeyCode == Keys.S)
-            {
-                MovePlayer(0, 1);
-            }
-            else if (e.KeyCode == Keys.A)
-            {
-                MovePlayer(-1, 0);
-            }
-            else if (e.KeyCode == Keys.D)
-            {
-                MovePlayer(1, 0);
-            }
+            playerMovement.OnKeyDown(e.KeyCode);
         }
-
-        private void MovePlayer(int x, int y)
+        
+        private void RenderForm_KeyUp(object sender, KeyEventArgs e)
         {
-            RenderObject player = gc.player;
-            float newx = player.rectangle.X + (x * gc.tileSize);
-            float newy = player.rectangle.Y + (y * gc.tileSize);
+            Console.WriteLine(e.KeyCode);
 
-            Tile next = gc.room.GetTile((int)newx, (int)newy);
-
-            if (next != null)
-            {
-                MoveEvent newMoveEvent = new MoveEvent()
-                {
-                    GameContext = gc,
-                    GameRenderer = renderer,
-                    LevelLoader = levelLoader,
-                    PlayerRenderer = player,
-                    Direction = new Vector2(x, y)
-                };
-
-                CanEnterEvent canEnterEvent = next.tileBehaviour?.CanEnter(newMoveEvent);
-
-                //Move the player
-                if ((canEnterEvent == null || !canEnterEvent.BlockMovement) && !gc.room.IsActiveRenderObjectBlocking((int)newx, (int)newy))
-                {
-                    player.rectangle.X = newx;
-                    player.rectangle.Y = newy;
-
-                    RenderObject[] activeRenderObjects = gc.room.GetActiveObjects((int)newx, (int)newy);
-
-                    //Call render object events
-                    foreach (RenderObject renderObject in activeRenderObjects)
-                    {
-                        renderObject.objectBehaviour?.OnEnter(newMoveEvent);
-                    }
-                }
-
-                //Call tile object events
-                if (canEnterEvent == null || !canEnterEvent.BlockEvents)
-                {
-                    _previousTile?.tileBehaviour?.OnExit(newMoveEvent);
-                    next.tileBehaviour?.OnEnter(newMoveEvent);
-                }
-
-                if (canEnterEvent == null || !canEnterEvent.BlockMovement || !canEnterEvent.BlockEvents)
-                {
-                    _previousTile = next;
-                }
-            }
+            playerMovement.OnKeyUp(e.KeyCode);
         }
 
         public void Logic(float frametime)
@@ -140,8 +83,12 @@ namespace GameJam
             var newUpdateEvent = new UpdateEvent()
             {
                 FrameTime = frametime,
-                GameContext = gc
+                GameContext = gc,
+                LevelLoader = levelLoader,
+                GameRenderer = renderer
             };
+
+            playerMovement.Update(newUpdateEvent);
 
             //Update all tiles
             Tile[] allTiles = gc.room.GetAllTiles();

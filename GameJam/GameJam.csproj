@@ -83,6 +83,7 @@
     <Compile Include="Game\Health.cs" />
     <Compile Include="Events\CanEnterEvent.cs" />
     <Compile Include="Events\MoveEvent.cs" />
+    <Compile Include="Game\PlayerMovement.cs" />
     <Compile Include="Game\TrapGenerator.cs" />
     <Compile Include="Game\Vector2Comparer.cs" />
     <Compile Include="TileEvents\Bullet.cs" />
