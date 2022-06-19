@@ -579,6 +579,9 @@
     <Content Include="leveldata\room.4.-2.4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="leveldata\room.4.-3.3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="leveldata\room.4.0.0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
