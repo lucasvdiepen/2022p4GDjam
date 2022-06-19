@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace GameJam.Game
 {
     public class Health
     {
+        public Action onDeath;
+
         public int StartHp { get; private set; }
         public int CurrentHp { get; private set; }
 
@@ -36,7 +39,7 @@ namespace GameJam.Game
 
         private void Dead()
         {
-            ResetHP();
+            onDeath?.Invoke();
         }
     }
 }
