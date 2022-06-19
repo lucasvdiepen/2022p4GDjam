@@ -18,7 +18,7 @@ namespace GameJam
         private float frametime;
         private GameRenderer renderer;
         //private Audio audio;
-        private readonly GameContext gc = new GameContext();
+        private GameContext gc;
         private Tile _previousTile;
 
         public RenderForm()
@@ -31,7 +31,7 @@ namespace GameJam
             //audio = new Audio();
             KeyDown += RenderForm_KeyDown;
             FormClosing += Form1_FormClosing;
-            Load += RenderForm_Load;
+            Load += (sender, e) => RenderForm_Load();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -39,8 +39,16 @@ namespace GameJam
             renderer.Dispose();
             //audio.Dispose();
         }
-        private void RenderForm_Load(object sender, EventArgs e)
+
+        private void RenderForm_Load()
         {
+            _previousTile = null;
+            frametime = 0;
+
+            gc = new GameContext();
+
+            gc.playerHealth.onDeath += RenderForm_Load;
+
             levelLoader = new LevelLoader(gc.tileSize, new FileLevelDataSource());
             levelLoader.LoadRooms(gc.spriteMap);
 

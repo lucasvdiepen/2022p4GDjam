@@ -9,6 +9,8 @@ namespace GameJam.Game
 {
     public class Health
     {
+        public Action onDeath;
+
         public int StartHp { get; private set; }
         public int CurrentHp { get; private set; }
 
@@ -22,7 +24,6 @@ namespace GameJam.Game
         public void ResetHP()
         {
             CurrentHp = StartHp;
-            Application.Restart();
         }
 
         public void AddHealth(int health)
@@ -38,7 +39,7 @@ namespace GameJam.Game
 
         private void Dead()
         {
-            ResetHP();
+            onDeath?.Invoke();
         }
     }
 }
