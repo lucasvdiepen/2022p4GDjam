@@ -18,6 +18,8 @@ namespace GameJam.TileEvents
         private Direction2D _direction2D;
         private int _direction;
 
+        private int _invertCount;
+
         public Saw(float moveTime) : base(false, false, moveTime)
         {   
 
@@ -36,6 +38,8 @@ namespace GameJam.TileEvents
 
         private void Move(GameContext gameContext, RenderObject renderObject)
         {
+            if (_invertCount >= 2) return;
+
             int newX = (int)renderObject.rectangle.X;
             int newY = (int)renderObject.rectangle.Y;
 
@@ -49,11 +53,12 @@ namespace GameJam.TileEvents
                     break;
             }
 
-            if(gameContext.room.IsMoveBlocked(newX, newY))
+            if (gameContext.room.IsMoveBlocked(newX, newY))
             {
                 InvertMove(gameContext, renderObject);
                 return;
             }
+            else _invertCount = 0;
 
             renderObject.rectangle.X = newX;
             renderObject.rectangle.Y = newY;
@@ -64,6 +69,7 @@ namespace GameJam.TileEvents
 
         private void InvertMove(GameContext gameContext, RenderObject renderObject)
         {
+            _invertCount++;
             _direction *= -1;
             Move(gameContext, renderObject);
         }
