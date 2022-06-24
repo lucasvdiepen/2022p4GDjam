@@ -28,8 +28,7 @@ namespace GameJam.TileEvents
         public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
         {
             List<Tile> moveBlockingTiles = room.GetMoveBlockingTiles();
-            var tryTimes = 10;
-            for (int i = 0; i < tryTimes; i++)
+            for (int i = moveBlockingTiles.Count - 1; i >= 0; i--)
             {
                 Tile currentTile = moveBlockingTiles[rnd.Next(0, moveBlockingTiles.Count)];
 
