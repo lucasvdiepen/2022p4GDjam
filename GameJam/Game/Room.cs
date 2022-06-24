@@ -62,6 +62,26 @@ namespace GameJam.Game
             return IsActiveRenderObjectBuildable(tile.rectangle.X, tile.rectangle.Y);
         }
 
+        public bool IsConnectable(int x, int y)
+        {
+            Tile tile = GetTile(x, y);
+
+            return IsConnectable(tile);
+        }
+
+        public bool IsConnectable(Vector2 position)
+        {
+            return IsConnectable(position.x, position.y);
+        }
+
+        public bool IsConnectable(Tile tile)
+        {
+            if (tile == null) return false;
+            if (tile.tileBehaviour != null && !tile.tileBehaviour.IsConnectable) return false;
+
+            return IsActiveRenderObjectConnectable(tile.rectangle.X, tile.rectangle.Y);
+        }
+
         public bool IsActiveRenderObjectBuildable(int x, int y)
         {
             RenderObject[] activeRenderObjects = GetActiveObjects(x, y);
@@ -84,6 +104,18 @@ namespace GameJam.Game
             }
 
             return false;
+        }
+
+        public bool IsActiveRenderObjectConnectable(int x, int y)
+        {
+            RenderObject[] activeRenderObjects = GetActiveObjects(x, y);
+
+            foreach(RenderObject activeObject in activeRenderObjects)
+            {
+                if (activeObject.objectBehaviour != null && !activeObject.objectBehaviour.IsConnectable) return false;
+            }
+
+            return true;
         }
 
         public bool IsMoveBlocked(Tile tile)
@@ -113,7 +145,7 @@ namespace GameJam.Game
             return allTiles.ToArray();
         }
 
-        public Tile[] GetBuildableTiles()
+        public List<Tile> GetBuildableTiles()
         {
             Dictionary<Vector2, Tile> buildableTiles = new Dictionary<Vector2, Tile>(new Vector2Comparer());
 
@@ -131,15 +163,15 @@ namespace GameJam.Game
                 buildableTiles.Remove(new Vector2(renderObject.rectangle.X, renderObject.rectangle.Y));
             }
 
-            return buildableTiles.Values.ToArray();
+            return buildableTiles.Values.ToList();
         }
 
         public Vector2 GetRandomBuildableTile(Random rnd)
         {
-            Tile[] buildableTiles = GetBuildableTiles();
-            if (buildableTiles.Length == 0) return null;
+            List<Tile> buildableTiles = GetBuildableTiles();
+            if (buildableTiles.Count == 0) return null;
 
-            var rect = buildableTiles[rnd.Next(0, buildableTiles.Length)].rectangle;
+            var rect = buildableTiles[rnd.Next(0, buildableTiles.Count)].rectangle;
             return new Vector2(rect.X, rect.Y);
         }
 

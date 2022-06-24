@@ -13,7 +13,7 @@ namespace GameJam.TileEvents
     {
         private Vector2 _direction;
 
-        public Spike() : base(false, false)
+        public Spike() : base(false, false, true)
         {
 
         }

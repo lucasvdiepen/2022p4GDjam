@@ -15,7 +15,7 @@ namespace GameJam.TileEvents
     {
         private Vector2 _direction;
 
-        public Bullet(Vector2 direction, float moveTime, float frameTimeLeft) : base(false, true, moveTime, frameTimeLeft)
+        public Bullet(Vector2 direction, float moveTime, float frameTimeLeft) : base(false, true, true, moveTime, frameTimeLeft)
         {
             _direction = direction;
         }

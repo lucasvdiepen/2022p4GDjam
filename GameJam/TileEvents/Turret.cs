@@ -16,7 +16,7 @@ namespace GameJam.TileEvents
         private Vector2 _direction = new Vector2(1, 0);
         private float _bulletSpeed;
 
-        public Turret(float shootDelay, float bulletSpeed) : base(true, false, shootDelay)
+        public Turret(float shootDelay, float bulletSpeed) : base(true, false, true, shootDelay)
         {
             _bulletSpeed = bulletSpeed;
         }
@@ -50,7 +50,7 @@ namespace GameJam.TileEvents
 
         public Rectangle[] GetFrames(SpriteMap spriteMap) => spriteMap.GetTurretFrames(_direction);
 
-        public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
+        /*public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
         {
             var newLocation = room.GetRandomBuildableTile(rnd);
 
@@ -61,6 +61,46 @@ namespace GameJam.TileEvents
             _direction = directions[Array.IndexOf(freeSpaces, freeSpaces.Max())];
 
             return newLocation;
+        }*/
+
+        public Vector2 GetSuitableLocation(Room room, int tileSize, Random rnd)
+        {
+            List<Tile> buildableTiles = room.GetBuildableTiles();
+
+            for (int i = buildableTiles.Count - 1; i >= 0; i--)
+            {
+                Tile currentTile = buildableTiles[rnd.Next(0, buildableTiles.Count)];
+
+                Vector2 currentTilePosition = new Vector2(currentTile.rectangle.X, currentTile.rectangle.Y);
+
+                Vector2[] directions = Vector2.AllDirections;
+
+                bool isConnectable = true;
+                foreach(Vector2 direction in directions)
+                {
+                    Vector2 newPosition = currentTilePosition + direction * tileSize;
+
+                    if (!room.IsConnectable(newPosition))
+                    {
+                        isConnectable = false;
+                        break;
+                    }
+                }
+
+                if(!isConnectable)
+                {
+                    buildableTiles.Remove(currentTile);
+                    continue;
+                }
+
+                int[] freeSpaces = GetFreeSpaceCountInDirections(room, currentTilePosition, directions);
+
+                _direction = directions[Array.IndexOf(freeSpaces, freeSpaces.Max())];
+
+                return currentTilePosition;
+            }
+
+            return null;
         }
 
         private int[] GetFreeSpaceCountInDirections(Room room, Vector2 startPosition, Vector2[] directions)
