@@ -20,7 +20,7 @@ namespace GameJam.TileEvents
 
         private int _invertCount;
 
-        public Saw(float moveTime) : base(false, false, moveTime)
+        public Saw(float moveTime) : base(false, false, true, moveTime)
         {   
 
         }

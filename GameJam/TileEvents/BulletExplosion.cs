@@ -9,7 +9,7 @@ namespace GameJam.TileEvents
 {
     public class BulletExplosion : TimerBehaviour
     {
-        public BulletExplosion(float time, float frameTimeLeft) : base(false, true, time, frameTimeLeft)
+        public BulletExplosion(float time, float frameTimeLeft) : base(false, true, true, time, frameTimeLeft)
         {
 
         }
