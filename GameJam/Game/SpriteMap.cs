@@ -104,7 +104,10 @@ namespace GameJam.Game
             {
                     new Rectangle(44, 9, 16, 16),
                     new Rectangle(65, 9, 16, 16),
-                    new Rectangle(86, 9, 16, 16)
+                    new Rectangle(86, 9, 16, 16),
+                    new Rectangle(107, 9, 16, 16),
+                    new Rectangle(128, 9, 16, 16),
+                    new Rectangle(149, 9, 16, 16)
             };
 
             sawAnimation = new Rectangle[]
