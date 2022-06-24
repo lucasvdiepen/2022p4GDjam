@@ -48,9 +48,9 @@ namespace GameJam.Game
             tileObjects.Add('E', () => { return new Door(); });
             tileObjects.Add('S', () => { return new Door(); });
 
-            //tileObjects.Add('1', () => { return new TileBehaviour(true); });
-            //tileObjects.Add('2', () => { return new TileBehaviour(true); });
-            //tileObjects.Add('3', () => { return new TileBehaviour(true); });
+            tileObjects.Add('1', () => { return new TileBehaviour(true); });
+            tileObjects.Add('2', () => { return new TileBehaviour(true); });
+            tileObjects.Add('3', () => { return new TileBehaviour(true); });
 
             tileObjects.Add('!', () => { return new Stair(-1); });
             tileObjects.Add('?', () => { return new Stair(1); });
@@ -108,6 +108,7 @@ namespace GameJam.Game
                     new Rectangle(107, 9, 16, 16),
                     new Rectangle(128, 9, 16, 16),
                     new Rectangle(149, 9, 16, 16)
+
             };
 
             sawAnimation = new Rectangle[]
